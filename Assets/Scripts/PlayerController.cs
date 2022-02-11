@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 1;
+    [SerializeField] private LayerMask solidObjectsLayer;
+    [SerializeField] private LayerMask grassLayer;
 
     private bool isMoving = false;
     private Vector2 input;
@@ -34,7 +36,10 @@ public class PlayerController : MonoBehaviour
                 targetPos.x += input.x;
                 targetPos.y += input.y;
 
-                StartCoroutine(Move(targetPos));
+                if(IsWakeable(targetPos))
+                {
+                    StartCoroutine(Move(targetPos));
+                }
             }
         }
         animator.SetBool("isMoving", isMoving);
@@ -53,6 +58,28 @@ public class PlayerController : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
-   
+        
+        CheckForBattles();
+    }
+
+    private bool IsWakeable(Vector3 targetPos)
+    {
+        // Checks overposition on the solidOBjects tile
+        if(Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer) != null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void CheckForBattles()
+    {
+        if (Physics2D.OverlapCircle(transform.position, 0.2f, grassLayer) != null)
+        {
+            if(Random.Range(0, 10) <= 1)
+            {
+                Debug.Log("Battle Begins!");
+            }
+        }
     }
 }
