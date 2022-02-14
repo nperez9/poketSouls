@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 7_Squirtle
   m_EditorClassIdentifier: 
   id: 7
-  name: 
+  name: Squirtle
   description: 
   littleSprite1: {fileID: 0}
   littleSprite2: {fileID: 0}
@@ -27,3 +27,4 @@ MonoBehaviour:
   spAttack: 50
   spDefence: 64
   speed: 43
+  learnableMoves: []

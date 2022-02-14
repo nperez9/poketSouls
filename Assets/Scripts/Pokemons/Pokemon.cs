@@ -7,23 +7,28 @@ public class Pokemon
     PoketSoulBase _base;
     int level;
     int Hp;
-    List<Move> moves;
+    List<Move> moves = new List<Move>(4);
+
+    public PoketSoulBase Base { get => _base; }
+    public int Level { get => level; }
+    public int HP { get => Hp; }
+    public List<Move> Moves { get => moves; }
 
     public Pokemon(PoketSoulBase _Base, int lvl)
     {
         _base = _Base;
         level = lvl;
-        Hp = _base.MaxHp;
+        Hp = MaxHp;
 
         // add moves in base of the learnedStuff
         foreach (var learnableMove in _base.LearnableMoves)
         {
-            if (learnableMove.Level >= level)
+            if (level >= learnableMove.Level)
             {
                 this.moves.Add(new Move(learnableMove.Move));
             }
 
-            if (moves.Count >= 4)
+            if (this.moves.Count >= 4)
             {
                 break;
             }

@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HpbAR : MonoBehaviour
+public class HpBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject health;
 
-    // Update is called once per frame
-    void Update()
+    public void SetHp(float hpNormalized)
     {
-        
+        health.transform.localScale = new Vector3(hpNormalized, 1f);
     }
 }

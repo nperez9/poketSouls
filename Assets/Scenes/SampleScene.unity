@@ -283,9 +283,9 @@ RectTransform:
   m_Father: {fileID: 683686693}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -80}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &398198870
@@ -689,6 +689,7 @@ GameObject:
   - component: {fileID: 558060080}
   - component: {fileID: 558060079}
   - component: {fileID: 558060078}
+  - component: {fileID: 558060081}
   m_Layer: 0
   m_Name: BattleCanvas
   m_TagString: Untagged
@@ -780,6 +781,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &558060081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558060076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c5755a2241be048b3f11a98e670312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerUnit: {fileID: 2140377401}
+  playerHud: {fileID: 1260661679}
+  enemyUnit: {fileID: 1592455614}
+  enemyHud: {fileID: 1648366513}
 --- !u!1 &588485790
 GameObject:
   m_ObjectHideFlags: 0
@@ -8423,6 +8440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 830645270}
+  - component: {fileID: 830645271}
   m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
@@ -8454,6 +8472,19 @@ RectTransform:
   m_AnchoredPosition: {x: -0.25, y: 24.4}
   m_SizeDelta: {x: -19.880005, y: 19.7}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &830645271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830645269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94022fb982d27cf40a01e99c76a19901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1148844206}
 --- !u!1 &906976400
 GameObject:
   m_ObjectHideFlags: 0
@@ -8567,7 +8598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 98.07, y: 16.5}
+  m_AnchoredPosition: {x: 98.07001, y: 16.5}
   m_SizeDelta: {x: 177.35, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &942324929
@@ -8598,7 +8629,7 @@ MonoBehaviour:
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 3
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -8948,6 +8979,7 @@ GameObject:
   - component: {fileID: 1260661676}
   - component: {fileID: 1260661678}
   - component: {fileID: 1260661677}
+  - component: {fileID: 1260661679}
   m_Layer: 0
   m_Name: PlayerHUD
   m_TagString: Untagged
@@ -9016,6 +9048,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260661675}
   m_CullTransparentMesh: 1
+--- !u!114 &1260661679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260661675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e96bc27dc22e2b4c86f3eed1048d86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 942324929}
+  LevelText: {fileID: 543024606}
+  hpBar: {fileID: 830645271}
 --- !u!1 &1317503585
 GameObject:
   m_ObjectHideFlags: 0
@@ -10380,8 +10427,9 @@ GameObject:
   - component: {fileID: 1592455611}
   - component: {fileID: 1592455613}
   - component: {fileID: 1592455612}
+  - component: {fileID: 1592455614}
   m_Layer: 0
-  m_Name: PokemonEnemy
+  m_Name: EnemyUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10445,6 +10493,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1592455610}
   m_CullTransparentMesh: 1
+--- !u!114 &1592455614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592455610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9979fe4de455e394685063514105eb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poketSoulBase: {fileID: 11400000, guid: 9aa398a5dd42eee418994db58cb2392f, type: 2}
+  level: 8
+  isPlayerUnit: 0
 --- !u!1 &1638751201
 GameObject:
   m_ObjectHideFlags: 0
@@ -10538,8 +10601,9 @@ GameObject:
   - component: {fileID: 1648366510}
   - component: {fileID: 1648366512}
   - component: {fileID: 1648366511}
+  - component: {fileID: 1648366513}
   m_Layer: 0
-  m_Name: EnemyInfo
+  m_Name: EnemyHUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10606,6 +10670,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648366509}
   m_CullTransparentMesh: 1
+--- !u!114 &1648366513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648366509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e96bc27dc22e2b4c86f3eed1048d86a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 1935192752}
+  LevelText: {fileID: 1638751203}
+  hpBar: {fileID: 1892254553}
 --- !u!1 &1762782181
 GameObject:
   m_ObjectHideFlags: 0
@@ -10695,6 +10774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1892254552}
+  - component: {fileID: 1892254553}
   m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
@@ -10726,6 +10806,19 @@ RectTransform:
   m_AnchoredPosition: {x: -0.25, y: 24.4}
   m_SizeDelta: {x: -19.880005, y: 19.7}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1892254553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892254551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94022fb982d27cf40a01e99c76a19901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2079150876}
 --- !u!1 &1935192750
 GameObject:
   m_ObjectHideFlags: 0
@@ -10761,7 +10854,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 98.07, y: 16.5}
+  m_AnchoredPosition: {x: 98.07001, y: 16.5}
   m_SizeDelta: {x: 177.35, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1935192752
@@ -10792,7 +10885,7 @@ MonoBehaviour:
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 3
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -11455,8 +11548,9 @@ GameObject:
   - component: {fileID: 2140377398}
   - component: {fileID: 2140377400}
   - component: {fileID: 2140377399}
+  - component: {fileID: 2140377401}
   m_Layer: 0
-  m_Name: PokemonImage
+  m_Name: PlayerUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11520,3 +11614,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140377397}
   m_CullTransparentMesh: 1
+--- !u!114 &2140377401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140377397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9979fe4de455e394685063514105eb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poketSoulBase: {fileID: 11400000, guid: e6b255c3e5955804fbaa5673ca13581d, type: 2}
+  level: 7
+  isPlayerUnit: 1
