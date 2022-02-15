@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ab8a80600918346a62bbd1dacc87f6, type: 3}
+  m_Name: 3_Venusaur
+  m_EditorClassIdentifier: 
+  id: 3
+  name: Venusaur
+  description: 
+  littleSprite1: {fileID: 0}
+  littleSprite2: {fileID: 0}
+  frontSprite: {fileID: 21300000, guid: f824769f97f10f646be290f289956249, type: 3}
+  backSprite: {fileID: 21300000, guid: c190603ceb85f354c8e81ef0488a5afd, type: 3}
+  type1: 3
+  type2: 9
+  maxHp: 80
+  attack: 82
+  defence: 83
+  spAttack: 100
+  spDefence: 100
+  speed: 80
+  learnableMoves:
+  - level: 1
+    move: {fileID: 11400000, guid: a276564b0e22fec478e8ddf11dcdd913, type: 2}
+  - level: 4
+    move: {fileID: 11400000, guid: 6a6e241aa1438bf4c8f02816b877d81a, type: 2}
+  - level: 6
+    move: {fileID: 11400000, guid: 44ec7e9d4773d4f4fb80ca7e4390d3a3, type: 2}
+  - level: 10
+    move: {fileID: 11400000, guid: aac88e8102782d44abc12605f8f29d0d, type: 2}

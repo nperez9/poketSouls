@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ab8a80600918346a62bbd1dacc87f6, type: 3}
+  m_Name: 98_Krabby
+  m_EditorClassIdentifier: 
+  id: 7
+  name: Squirtle
+  description: 
+  littleSprite1: {fileID: 0}
+  littleSprite2: {fileID: 0}
+  frontSprite: {fileID: 21300000, guid: e09df33fb80ebda44981ce86e358a272, type: 3}
+  backSprite: {fileID: 21300000, guid: 51ea9e6094edac84891ebf4dd4d1def3, type: 3}
+  type1: 1
+  type2: 0
+  maxHp: 30
+  attack: 105
+  defence: 90
+  spAttack: 25
+  spDefence: 25
+  speed: 50
+  learnableMoves: []

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ab8a80600918346a62bbd1dacc87f6, type: 3}
+  m_Name: 2_Ivysaur
+  m_EditorClassIdentifier: 
+  id: 2
+  name: Ivysaur
+  description: 
+  littleSprite1: {fileID: 0}
+  littleSprite2: {fileID: 0}
+  frontSprite: {fileID: 21300000, guid: 1ad8d98cbf979cd47871afefd13a0b81, type: 3}
+  backSprite: {fileID: 21300000, guid: d80ea50d34eec894fbc876bca44f4330, type: 3}
+  type1: 3
+  type2: 9
+  maxHp: 60
+  attack: 62
+  defence: 63
+  spAttack: 80
+  spDefence: 80
+  speed: 60
+  learnableMoves:
+  - level: 1
+    move: {fileID: 11400000, guid: a276564b0e22fec478e8ddf11dcdd913, type: 2}
+  - level: 4
+    move: {fileID: 11400000, guid: 6a6e241aa1438bf4c8f02816b877d81a, type: 2}
+  - level: 6
+    move: {fileID: 11400000, guid: 44ec7e9d4773d4f4fb80ca7e4390d3a3, type: 2}
+  - level: 10
+    move: {fileID: 11400000, guid: aac88e8102782d44abc12605f8f29d0d, type: 2}

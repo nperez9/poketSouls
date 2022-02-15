@@ -5,24 +5,26 @@ using UnityEngine.UI;
 
 
 // Manage the pokemon sprite of the battle
-public class BattleUnit : MonoBehaviour
-{
-    [SerializeField] PoketSoulBase poketSoulBase;
-    [SerializeField] int level = 0;
-    // Defines the sprite to use
-    [SerializeField] bool isPlayerUnit;
-
-    public Pokemon Pokemon { set; get; }
-    private Image image;
-
-    private void Awake()
+namespace Battle { 
+    public class BattleUnit : MonoBehaviour
     {
-        image = GetComponent<Image>();    
-    }
+        [SerializeField] PoketSoulBase poketSoulBase;
+        [SerializeField] int level = 0;
+        // Defines the sprite to use
+        [SerializeField] bool isPlayerUnit;
 
-    public void Setup()
-    {
-        Pokemon = new Pokemon(poketSoulBase, level);
-        image.sprite = isPlayerUnit ? Pokemon.Base.BackSprite : Pokemon.Base.FrontSprite;
+        public Pokemon Pokemon { set; get; }
+        private Image image;
+
+        private void Awake()
+        {
+            image = GetComponent<Image>();    
+        }
+
+        public void Setup()
+        {
+            Pokemon = new Pokemon(poketSoulBase, level);
+            image.sprite = isPlayerUnit ? Pokemon.Base.BackSprite : Pokemon.Base.FrontSprite;
+        }
     }
 }
