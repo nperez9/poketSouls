@@ -980,8 +980,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 600}
+  m_AnchoredPosition: {x: 0.0024471, y: 0}
+  m_SizeDelta: {x: 800, y: 449.01}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &588485792
 MonoBehaviour:
@@ -8728,6 +8728,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DialogBoxText: {fileID: 1762782183}
   letterForSecond: 30
+  ActionBox: {fileID: 1213435450}
+  MovesBox: {fileID: 353863135}
+  MoveInfoBox: {fileID: 1880577819}
+  ActionsList:
+  - {fileID: 1959249128}
+  - {fileID: 945030097}
+  - {fileID: 692106189}
+  - {fileID: 1431125178}
+  MovesList:
+  - {fileID: 1998617117}
+  - {fileID: 1221030195}
+  - {fileID: 423970254}
+  - {fileID: 2119198483}
+  MovePPText: {fileID: 1643738054}
+  MoveTypeText: {fileID: 2048666370}
 --- !u!1 &942324927
 GameObject:
   m_ObjectHideFlags: 0
@@ -9103,12 +9118,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1213435451}
   m_Layer: 0
-  m_Name: BattleMenu
+  m_Name: ActionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1213435451
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11026,7 +11041,7 @@ GameObject:
   - component: {fileID: 1762782184}
   - component: {fileID: 1762782183}
   m_Layer: 0
-  m_Name: Description
+  m_Name: DialogBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
