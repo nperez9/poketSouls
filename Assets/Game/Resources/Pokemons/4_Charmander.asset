@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 4_Charmander
   m_EditorClassIdentifier: 
   id: 4
-  name: 
+  name: Charmander
   description: 
   littleSprite1: {fileID: 0}
   littleSprite2: {fileID: 0}
@@ -27,3 +27,4 @@ MonoBehaviour:
   spAttack: 60
   spDefence: 50
   speed: 65
+  learnableMoves: []

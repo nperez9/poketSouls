@@ -67,6 +67,23 @@ namespace Battle
             }
         }
 
+        public void UpdateMovesSelection(int selectedMove, Move move)
+        {
+            for (int i = 0; i < MovesList.Count; i++)
+            {
+                if (i == selectedMove)
+                {
+                    MovesList[i].color = higthligthedColor;
+                    MovePPText.text = $"{move.PP} / {move.Base.Pp}";
+                    MoveTypeText.text = move.Base.Type.ToString();
+                }
+                else
+                {
+                    MovesList[i].color = Color.black;
+                }
+            }
+        }
+
         public void SetMovesText(List<Move> moves)
         {
             for (int i = 0; i < MovesList.Count; i++)

@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Battle { 
     public enum BattleStates { Start, PlayerAction, PlayerMove, EnemyMove, Busy };
+    
     public class BattleSystem : MonoBehaviour
     {
         // Units setting
@@ -44,7 +43,9 @@ namespace Battle {
         {
             state = BattleStates.PlayerAction;
             StartCoroutine(battleDialogBox.TypeDialog("What you wanna do?"));
+            battleDialogBox.SetEnabledDialogBox(true);
             battleDialogBox.SetEnabledActionBox(true);
+            battleDialogBox.SetEnabledMoveBox(false);
         }
 
         private void PlayerMove()
@@ -84,6 +85,20 @@ namespace Battle {
                     currentAction--;
                 }
             }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (currentAction < 2)
+                {
+                    currentAction += 2;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (currentAction > 1)
+                {
+                    currentAction -= 2;
+                }
+            }
 
             battleDialogBox.UpdateActionSelection(currentAction);
 
@@ -103,34 +118,42 @@ namespace Battle {
 
         private void HandlePlayerMove()
         {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                if (currentAction < playerUnit.Pokemon.Moves.Count - 2)
+                if (currentMove < playerUnit.Pokemon.Moves.Count - 2)
                 {
-                    currentAction += 2;
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                if (currentAction > 1)
-                {
-                    currentAction++;
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                if (currentAction < 1)
-                {
-                    currentAction++;
+                    currentMove += 2;
                 }
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                if (currentAction > 0)
+                if (currentMove > 1)
                 {
-                    currentAction--;
+                    currentMove -= 2;
                 }
             }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (currentMove < playerUnit.Pokemon.Moves.Count - 1)
+                {
+                    currentMove++;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (currentMove > 0)
+                {
+                    currentMove--;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                PlayerAction();
+            }
+
+            // TODO: check this, may be some bugs
+            battleDialogBox.UpdateMovesSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
         }
     }
 }
