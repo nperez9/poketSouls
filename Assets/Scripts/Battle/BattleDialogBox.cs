@@ -18,7 +18,7 @@ namespace Battle
         [SerializeField] List<Text> MovesList;
         [SerializeField] Text MovePPText = null;
         [SerializeField] Text MoveTypeText = null;
-
+        [SerializeField] Color higthligthedColor;
 
         public void SetDialogBoxText(string content)
         {
@@ -38,7 +38,7 @@ namespace Battle
 
         public void SetEnabledDialogBox(bool enabled)
         {
-            DialogBoxText.enabled = true;
+            DialogBoxText.enabled = enabled;
         }
 
         public void SetEnabledActionBox(bool enabled)
@@ -50,6 +50,36 @@ namespace Battle
         {
             MoveInfoBox.SetActive(enabled);
             MovesBox.SetActive(enabled);
+        }
+
+        public void UpdateActionSelection(int selectedAction)
+        {
+            for (int i = 0; i < ActionsList.Count; i++)
+            {
+                if (i == selectedAction)
+                {
+                    ActionsList[i].color = higthligthedColor;
+                }
+                else
+                {
+                    ActionsList[i].color = Color.black;
+                }
+            }
+        }
+
+        public void SetMovesText(List<Move> moves)
+        {
+            for (int i = 0; i < MovesList.Count; i++)
+            {
+                if (moves.Count > i)
+                {
+                    MovesList[i].text = moves[i].Base.Name;
+                }
+                else
+                {
+                    MovesList[i].text = "-";
+                }
+            }
         }
     }
 }
