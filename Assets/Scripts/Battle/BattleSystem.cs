@@ -154,6 +154,23 @@ namespace Battle {
 
             // TODO: check this, may be some bugs
             battleDialogBox.UpdateMovesSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
+
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                battleDialogBox.SetEnabledDialogBox(true);
+                battleDialogBox.SetEnabledActionBox(false);
+                battleDialogBox.SetEnabledMoveBox(false);
+
+                StartCoroutine(ExecutePlayerMove());
+            }
+        }
+
+        IEnumerator ExecutePlayerMove()
+        {
+            Move move = playerUnit.Pokemon.Moves[currentMove];
+            yield return battleDialogBox.TypeDialog($"{playerUnit.Pokemon.Name}! Use {move.Base.Name}!");
+            
+            yield return new WaitForSeconds(1f);
         }
     }
 }
