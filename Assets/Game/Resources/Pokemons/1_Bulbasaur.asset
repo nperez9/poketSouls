@@ -19,8 +19,8 @@ MonoBehaviour:
   littleSprite2: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: 3ddf137e399938947a747d8db63f337e, type: 3}
   backSprite: {fileID: 21300000, guid: 4cd08f34782a448458ea7c03551386f5, type: 3}
-  type1: 3
-  type2: 9
+  type1: 5
+  type2: 8
   maxHp: 45
   attack: 49
   defence: 49

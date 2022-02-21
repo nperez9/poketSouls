@@ -18,6 +18,7 @@ namespace Battle {
         private int currentAction = 0;
         private int currentMove = 0;
 
+        private bool firstFrameMove = false;
         private void Start()
         {
             StartCoroutine(SetupBattle());
@@ -51,6 +52,7 @@ namespace Battle {
         private void PlayerMove()
         {
             state = BattleStates.PlayerMove;
+            firstFrameMove = true;
             battleDialogBox.SetEnabledDialogBox(false);
             battleDialogBox.SetEnabledActionBox(false);
             battleDialogBox.SetEnabledMoveBox(true);
@@ -155,7 +157,7 @@ namespace Battle {
             // TODO: check this, may be some bugs
             battleDialogBox.UpdateMovesSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
 
-            if (Input.GetKeyDown(KeyCode.Z))
+            if (Input.GetKeyDown(KeyCode.Z) && !firstFrameMove)
             {
                 battleDialogBox.SetEnabledDialogBox(true);
                 battleDialogBox.SetEnabledActionBox(false);
@@ -163,14 +165,51 @@ namespace Battle {
 
                 StartCoroutine(ExecutePlayerMove());
             }
+
+            firstFrameMove = false;
         }
 
         IEnumerator ExecutePlayerMove()
         {
+            state = BattleStates.Busy;
             Move move = playerUnit.Pokemon.Moves[currentMove];
-            yield return battleDialogBox.TypeDialog($"{playerUnit.Pokemon.Name}! Use {move.Base.Name}!");
             
+            yield return battleDialogBox.TypeDialog($"{playerUnit.Pokemon.Name}! Use {move.Base.Name}!");
             yield return new WaitForSeconds(1f);
+
+            bool isEnemyAlive = enemyUnit.Pokemon.TakeDemage(move, playerUnit.Pokemon);
+            yield return enemyHud.UpdateHP();
+
+            if (!isEnemyAlive)
+            {
+                yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} Faints!");
+            } 
+            else
+            {
+                // make this on speed base 
+                StartCoroutine(ExecuteEnemyMove());
+            }
+        }
+
+        IEnumerator ExecuteEnemyMove()
+        {
+            state = BattleStates.EnemyMove;
+            Move move = enemyUnit.Pokemon.Moves[(int)Random.Range(0, enemyUnit.Pokemon.Moves.Count)];
+
+            yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} enemy use {move.Base.Name}");
+            yield return new WaitForSeconds(1f);
+
+            bool isPlayerAlive = playerUnit.Pokemon.TakeDemage(move, enemyUnit.Pokemon);
+            yield return playerHud.UpdateHP();
+
+            if (!isPlayerAlive)
+            {
+                yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
+            } 
+            else
+            {
+                PlayerAction();
+            }
         }
     }
 }

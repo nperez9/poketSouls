@@ -59,20 +59,72 @@ public class LearnableMove
 public enum PokemonType
 {
     None,
-    Water,
+    Normal,
     Fire,
+    Water,
+    Electric,
     Grass,
     Ice,
-    Electric,
     Fight,
-    Dark,
-    Normal,
     Poison,
-    Dragon,
-    Ghost,
-    Flying,
     Ground,
+    Flying,
+    Psychic,
+    Bug,
     Rock,
+    Ghost,
+    Dark,
+    Dragon,
     Steel,
-    Psych
+    Fairy
 }
+
+public class TypeCharts
+{
+    public static float[][] chart = {
+        //NOR|FIR|WAT|ELE|GRA|ICE|FIG|POI|GRO|FLY|PSY|BUG|ROC|GHO|DAR|DRA|STE|FAI|
+        /*NOR*/ new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 0.5f, 0f, 1f, 1f, 0.5f, 1f },
+        /*FIR*/ new float[] { 1f, 0.5f, 0.5f, 1f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 2f, 0.5f, 1f, 1f, 0.5f, 2f, 1f },
+        /*WAT*/ new float[] { 1f, 2f, 0.5f, 1f, 0.5f, 1f, 1f, 1f, 2f, 1f, 1f, 1f, 2f, 1f, 1f, 0.5f, 1f, 1f },
+        /*ELE*/ new float[] { 1f, 1f, 2f, 0.5f, 0.5f, 1f, 1f, 1f, 0f, 2f, 1f, 1f, 1f, 1f, 1f, 0.5f, 1f, 1f },
+        /*GRA*/ new float[] { 1f, 0.5f, 2f, 1f, 0.5f, 1f, 1f, 0.5f, 2f, 0.5f, 1f, 0.5f, 2f, 1f, 1f, 0.5f, 0.5f, 1f },
+        /*ICE*/ new float[] { 1f, 0.5f, 0.5f, 1f, 2f, 0.5f, 1f, 1f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 2f, 0.5f, 1f },
+        /*FIG*/ new float[] { 2f, 1f, 1f, 1f, 1f, 2f, 1f, 0.5f, 1f, 0.5f, 0.5f, 0.5f, 2f, 0f, 2f, 1f, 2f, 0.5f },
+        /*POI*/ new float[] { 1f, 1f, 1f, 1f, 2f, 1f, 1f, 0.5f, 0.5f, 1f, 1f, 1f, 0.5f, 0.5f, 1f, 1f, 0f, 2f },
+        /*GRO*/ new float[] { 1f, 2f, 1f, 2f, 0.5f, 1f, 1f, 2f, 0f, 1f, 0.5f, 2f, 1f, 1f, 1f, 1f, 2f, 1f },
+        /*FLY*/ new float[] { 1f, 1f, 1f, 0.5f, 2f, 1f, 2f, 1f, 1f, 1f, 1f, 2f, 0.5f, 1f, 1f, 1f, 0.5f, 1f },
+        /*PSY*/ new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 2f, 2f, 1f, 1f, 0.5f, 1f, 1f, 1f, 0f, 1f, 0.5f, 1f },
+        /*BUG*/ new float[] { 1f, 0.5f, 1f, 1f, 2f, 1f, 0.5f, 0.5f, 1f, 0.5f, 2f, 1f, 1f, 0.5f, 2f, 1f, 0.5f, 0.5f },
+        /*ROC*/ new float[] { 1f, 2f, 1f, 1f, 1f, 2f, 0.5f, 1f, 0.5f, 2f, 1f, 2f, 1f, 1f, 1f, 1f, 0.5f, 1f },
+        /*GHO*/ new float[] { 0f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 2f, 1f, 1f, 2f, 0.5f, 1f, 1f, 1f },
+        /*DAR*/ new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 0.5f, 1f, 1f, 1f, 2f, 1f, 1f, 2f, 0.5f, 1f, 1f, 0.5f },
+        /*DRA*/ new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 2f, 0.5f, 0f },
+        /*STE*/ new float[] { 1f, 0.5f, 0.5f, 0.5f, 1f, 2f, 1f, 1f, 1f, 1f, 1f, 1f, 2f, 1f, 1f, 1f, 0.5f, 2f },
+        /*FAI*/ new float[] { 1f, 0.5f, 1f, 1f, 1f, 1f, 2f, 0.5f, 1f, 1f, 1f, 1f, 1f, 1f, 2f, 2f, 0.5f, 1f }
+    };
+
+    public static float GetTypeEffectiveness(PokemonType attackType, PokemonType defenceType1, PokemonType defenceType2)
+    {
+        if (attackType == PokemonType.None ||  defenceType1 == PokemonType.None)
+        {
+            return 1f;
+        }
+
+        // minus one because the none type
+        int row = (int)attackType - 1;
+        int col1 = (int)defenceType1 - 1;
+
+        float typeEffectiveness1 = chart[row][col1];
+        float typeEffectiveness2 = 1f;
+        
+        if (defenceType2 != PokemonType.None)
+        {
+            int col2 = (int)defenceType2 - 1;
+            typeEffectiveness2 = chart[row][col2];
+        }
+
+        float totalModifier = typeEffectiveness1 * typeEffectiveness2;
+        return totalModifier;
+    }
+}   
+    

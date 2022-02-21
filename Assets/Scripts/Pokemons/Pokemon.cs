@@ -12,7 +12,7 @@ public class Pokemon
 
     public PoketSoulBase Base { get => _base; }
     public int Level { get => level; }
-    public int HP { get => Hp; }
+    public int HP { get => Hp; set => Hp = value;  }
     public List<Move> Moves { get => moves; }
     public string Name { get => name; }
 
@@ -61,5 +61,31 @@ public class Pokemon
     public int MaxHp
     {
         get { return Mathf.FloorToInt((_base.MaxHp * level) / 100f) + 10; }
+    }
+
+    // this is how works in pokemon
+    public bool TakeDemage(Move move, Pokemon attacker)
+    {
+        float critical = 1f;
+        if (Random.value * 100f <= 6.25f)
+        {
+            critical = 1.5f;
+        }
+        float typeEffect = TypeCharts.GetTypeEffectiveness(move.Base.Type, Base.Type1, Base.Type2);
+
+        float modifiers = Random.Range(0.85f, 1f) * critical * typeEffect;
+        float a = (2 * attacker.Level + 10) / 250f;
+        float b = a * move.Base.Power * ((float)attacker.Attack / Defense) + 2;
+        int damage = Mathf.FloorToInt(b * modifiers);
+
+        HP -= damage;
+
+        // if pokemon faints, return false
+        if (HP < 0)
+        {
+            HP = 0;
+            return false;
+        }
+        return true;
     }
 }

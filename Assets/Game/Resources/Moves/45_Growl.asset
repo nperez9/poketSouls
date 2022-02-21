@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   number: 45
   name: Growl
-  description: "Low attack\t"
+  description: "Lows enemy attack\t"
   type: 8
   category: 2
   power: 0
