@@ -15,7 +15,7 @@ MonoBehaviour:
   number: 33
   name: Tackle
   description: Basic attack move
-  type: 8
+  type: 1
   category: 0
   power: 40
   accuracy: 100

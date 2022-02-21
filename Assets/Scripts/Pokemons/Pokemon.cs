@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using PokemonN;
 public class Pokemon
 {
     PoketSoulBase _base;
@@ -64,7 +65,7 @@ public class Pokemon
     }
 
     // this is how works in pokemon
-    public bool TakeDemage(Move move, Pokemon attacker)
+    public DamageDetails TakeDemage(Move move, Pokemon attacker)
     {
         float critical = 1f;
         if (Random.value * 100f <= 6.25f)
@@ -72,6 +73,7 @@ public class Pokemon
             critical = 1.5f;
         }
         float typeEffect = TypeCharts.GetTypeEffectiveness(move.Base.Type, Base.Type1, Base.Type2);
+        bool fainted = false;
 
         float modifiers = Random.Range(0.85f, 1f) * critical * typeEffect;
         float a = (2 * attacker.Level + 10) / 250f;
@@ -84,8 +86,14 @@ public class Pokemon
         if (HP < 0)
         {
             HP = 0;
-            return false;
+            fainted = true;
         }
-        return true;
+
+        return new DamageDetails()
+        {
+            Critical = critical,
+            TypeEffect = typeEffect,
+            Fainted = fainted,
+        };
     }
 }

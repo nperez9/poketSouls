@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+using PokemonN;
+
 namespace Battle { 
     public enum BattleStates { Start, PlayerAction, PlayerMove, EnemyMove, Busy };
     
@@ -177,10 +179,11 @@ namespace Battle {
             yield return battleDialogBox.TypeDialog($"{playerUnit.Pokemon.Name}! Use {move.Base.Name}!");
             yield return new WaitForSeconds(1f);
 
-            bool isEnemyAlive = enemyUnit.Pokemon.TakeDemage(move, playerUnit.Pokemon);
+            DamageDetails dd = enemyUnit.Pokemon.TakeDemage(move, playerUnit.Pokemon);
             yield return enemyHud.UpdateHP();
+            yield return DamageDialog(dd);
 
-            if (!isEnemyAlive)
+            if (dd.Fainted)
             {
                 yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} Faints!");
             } 
@@ -199,10 +202,11 @@ namespace Battle {
             yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} enemy use {move.Base.Name}");
             yield return new WaitForSeconds(1f);
 
-            bool isPlayerAlive = playerUnit.Pokemon.TakeDemage(move, enemyUnit.Pokemon);
+            DamageDetails dd = playerUnit.Pokemon.TakeDemage(move, enemyUnit.Pokemon);
             yield return playerHud.UpdateHP();
+            yield return DamageDialog(dd);
 
-            if (!isPlayerAlive)
+            if (dd.Fainted)
             {
                 yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
             } 
@@ -210,6 +214,31 @@ namespace Battle {
             {
                 PlayerAction();
             }
+        }
+
+        IEnumerator DamageDialog(DamageDetails dd)
+        {
+            string damageText = "";
+            if (dd.Critical > 1f)
+            {
+                damageText += "A critical hit! ";
+            }
+            if (dd.TypeEffect > 1f)
+            {
+                damageText += "It's super effective!";
+            } 
+            else if (dd.TypeEffect < 1f)
+            {
+                damageText += "It's not very effective...";
+            }
+
+            if (damageText != "")
+            {
+                yield return battleDialogBox.TypeDialog(damageText);
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            yield return null;
         }
     }
 }

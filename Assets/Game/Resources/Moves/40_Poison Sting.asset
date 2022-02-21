@@ -15,7 +15,7 @@ MonoBehaviour:
   number: 40
   name: Poison Sting
   description: Poison sting
-  type: 9
+  type: 8
   category: 0
   power: 35
   accuracy: 100

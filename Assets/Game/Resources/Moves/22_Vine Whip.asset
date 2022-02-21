@@ -15,7 +15,7 @@ MonoBehaviour:
   number: 22
   name: Vine Whip
   description: Basic grass attack
-  type: 3
+  type: 5
   category: 0
   power: 45
   accuracy: 100

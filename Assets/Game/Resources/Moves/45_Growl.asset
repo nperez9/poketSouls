@@ -15,7 +15,7 @@ MonoBehaviour:
   number: 45
   name: Growl
   description: "Lows enemy attack\t"
-  type: 8
+  type: 1
   category: 2
   power: 0
   accuracy: 100

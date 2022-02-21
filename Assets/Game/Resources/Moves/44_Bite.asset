@@ -15,7 +15,7 @@ MonoBehaviour:
   number: 25
   name: Bite
   description: "Basic dark psical attack\t"
-  type: 7
+  type: 15
   category: 0
   power: 60
   accuracy: 100

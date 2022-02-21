@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0ac24004732dd742914d4f05e05b97a, type: 3}
-  m_Name: 9_Thunder Punch
+  m_Name: 61_Bubble Beam
   m_EditorClassIdentifier: 
-  number: 9
-  name: Thunder Punch
-  description: Hits with a great punch of thunder. May paralize the target
-  type: 4
-  category: 0
-  power: 75
+  number: 62
+  name: BubbleBeam
+  description: a beam of bubbles, may reduce enemy speed
+  type: 3
+  category: 1
+  power: 65
   accuracy: 100
-  pp: 15
+  pp: 20
