@@ -68,8 +68,7 @@ public class Pokemon
     public DamageDetails TakeDemage(Move move, Pokemon attacker)
     {
         float critical = 1f;
-        if (Random.value * 100f <= 6.25f)
-        {
+        if (Random.value * 100f <= 6.25f) {
             critical = 1.5f;
         }
         float typeEffect = TypeCharts.GetTypeEffectiveness(move.Base.Type, Base.Type1, Base.Type2);
@@ -83,7 +82,7 @@ public class Pokemon
         HP -= damage;
 
         // if pokemon faints, return false
-        if (HP < 0)
+        if (HP <= 0)
         {
             HP = 0;
             fainted = true;

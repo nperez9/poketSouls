@@ -179,6 +179,10 @@ namespace Battle {
             yield return battleDialogBox.TypeDialog($"{playerUnit.Pokemon.Name}! Use {move.Base.Name}!");
             yield return new WaitForSeconds(1f);
 
+            playerUnit.PlayAttackAnimation();
+            yield return new WaitForSeconds(1f);
+            enemyUnit.PlayHitAnimation();
+
             DamageDetails dd = enemyUnit.Pokemon.TakeDemage(move, playerUnit.Pokemon);
             yield return enemyHud.UpdateHP();
             yield return DamageDialog(dd);
@@ -186,6 +190,7 @@ namespace Battle {
             if (dd.Fainted)
             {
                 yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} Faints!");
+                enemyUnit.PlayFaintAnimation();
             } 
             else
             {
@@ -202,6 +207,10 @@ namespace Battle {
             yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} enemy use {move.Base.Name}");
             yield return new WaitForSeconds(1f);
 
+            enemyUnit.PlayAttackAnimation();
+            yield return new WaitForSeconds(1f);
+            playerUnit.PlayHitAnimation();
+
             DamageDetails dd = playerUnit.Pokemon.TakeDemage(move, enemyUnit.Pokemon);
             yield return playerHud.UpdateHP();
             yield return DamageDialog(dd);
@@ -209,9 +218,11 @@ namespace Battle {
             if (dd.Fainted)
             {
                 yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
+                playerUnit.PlayFaintAnimation();
             } 
             else
             {
+                // Make this speed base
                 PlayerAction();
             }
         }
