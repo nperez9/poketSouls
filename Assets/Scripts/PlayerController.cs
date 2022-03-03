@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
+    public event Action OnBattle;
+
     [SerializeField] private float movementSpeed = 1;
     [SerializeField] private LayerMask solidObjectsLayer;
     [SerializeField] private LayerMask grassLayer;
@@ -12,12 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 input;
     private Animator animator = null;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();    
-    }
-
-    private void Update()
+    public void HandleUpdate()
     {
         if (!isMoving)
         {
@@ -43,7 +42,11 @@ public class PlayerController : MonoBehaviour
             }
         }
         animator.SetBool("isMoving", isMoving);
+    }
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
     }
 
     IEnumerator Move(Vector3 targetPos)
@@ -78,7 +81,9 @@ public class PlayerController : MonoBehaviour
         {
             if(Random.Range(0, 10) <= 1)
             {
-                Debug.Log("Battle Begins!");
+                isMoving = false;
+                animator.SetBool("isMoving", isMoving);
+                OnBattle();
             }
         }
     }

@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
+
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 using PokemonN;
+
 
 namespace Battle { 
     public enum BattleStates { Start, PlayerAction, PlayerMove, EnemyMove, Busy };
     
     public class BattleSystem : MonoBehaviour
     {
+        public event Action<bool> OnBattleEnd;
+
         // Units setting
         [SerializeField] BattleUnit playerUnit = null;
         [SerializeField] BattleHud playerHud = null;
@@ -21,7 +27,7 @@ namespace Battle {
         private int currentMove = 0;
 
         private bool firstFrameMove = false;
-        private void Start()
+        public void StartBattle()
         {
             StartCoroutine(SetupBattle());
         }
@@ -60,7 +66,7 @@ namespace Battle {
             battleDialogBox.SetEnabledMoveBox(true);
         }
 
-        private void Update()
+        public void HandleUpdate()
         {
             if (state == BattleStates.PlayerAction)
             {
@@ -191,6 +197,8 @@ namespace Battle {
             {
                 yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} Faints!");
                 enemyUnit.PlayFaintAnimation();
+                yield return new WaitForSeconds(1.5f);
+                OnBattleEnd(true);
             } 
             else
             {
@@ -219,6 +227,8 @@ namespace Battle {
             {
                 yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
                 playerUnit.PlayFaintAnimation();
+                yield return new WaitForSeconds(1.5f);
+                OnBattleEnd(false);
             } 
             else
             {

@@ -30,6 +30,7 @@ namespace Battle {
         {
             Pokemon = new Pokemon(poketSoulBase, level);
             image.sprite = isPlayerUnit ? Pokemon.Base.BackSprite : Pokemon.Base.FrontSprite;
+            image.color = originalColor;
             PlaySetupAnimation();
         }
 
