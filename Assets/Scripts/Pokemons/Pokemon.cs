@@ -55,7 +55,7 @@ public class Pokemon
     {
         get { return Mathf.FloorToInt((_base.SpAttack * level) / 100f) + 5; }
     }
-    public int SpDefence
+    public int SpDefense
     {
         get { return Mathf.FloorToInt((_base.SpDefence * level) / 100f) + 5; }
     }
@@ -74,10 +74,22 @@ public class Pokemon
         float typeEffect = TypeCharts.GetTypeEffectiveness(move.Base.Type, Base.Type1, Base.Type2);
         bool fainted = false;
 
-        float modifiers = Random.Range(0.85f, 1f) * critical * typeEffect;
-        float a = (2 * attacker.Level + 10) / 250f;
-        float b = a * move.Base.Power * ((float)attacker.Attack / Defense) + 2;
-        int damage = Mathf.FloorToInt(b * modifiers);
+        // In case of status change, the damage will be 1
+        int attack = 1;
+        int defense = 1;
+        
+        if (move.Base.Category == MoveCategory.Special)
+        {
+            attack = attacker.SpAttack;
+            defense = this.SpDefense;
+        }
+        else if (move.Base.Category == MoveCategory.Physical)
+        {
+            attack = attacker.Attack;
+            defense = this.Defense;
+        }
+
+        int damage = CalculateDamage(move, critical, typeEffect, attacker.Level, attack, defense);
 
         HP -= damage;
 
@@ -88,11 +100,23 @@ public class Pokemon
             fainted = true;
         }
 
+        // before return, reduce the movePP
+        move.PP--;
+
         return new DamageDetails()
         {
             Critical = critical,
             TypeEffect = typeEffect,
             Fainted = fainted,
         };
+    }
+
+    // this function use original pokemon(red, blue, green) calcule
+    private int CalculateDamage(Move move, float critical, float typeEffect, int attackerLevel, int attack, int defense)
+    {
+        float modifiers = Random.Range(0.85f, 1f) * critical * typeEffect;
+        float a = (2 * attackerLevel + 10) / 250f;
+        float b = a * move.Base.Power * ((float)attack / defense) + 2;
+        return Mathf.FloorToInt(b * modifiers);
     }
 }
