@@ -8920,6 +8920,7 @@ GameObject:
   - component: {fileID: 1107553947}
   - component: {fileID: 1107553949}
   - component: {fileID: 1107553950}
+  - component: {fileID: 1107553951}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -9034,6 +9035,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1107553951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107553946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f580a7abc676018409b093de0c2368c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pokemonParty:
+  - _base: {fileID: 11400000, guid: e6b255c3e5955804fbaa5673ca13581d, type: 2}
+    level: 4
+  - _base: {fileID: 11400000, guid: 9aa398a5dd42eee418994db58cb2392f, type: 2}
+    level: 5
 --- !u!1 &1148844206
 GameObject:
   m_ObjectHideFlags: 0
@@ -10769,8 +10787,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9979fe4de455e394685063514105eb62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poketSoulBase: {fileID: 11400000, guid: 9aa398a5dd42eee418994db58cb2392f, type: 2}
-  level: 8
   isPlayerUnit: 0
 --- !u!1 &1638751201
 GameObject:
@@ -11423,6 +11439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1979393749}
   - component: {fileID: 1979393751}
+  - component: {fileID: 1979393755}
   - component: {fileID: 1979393750}
   - component: {fileID: 1979393754}
   - component: {fileID: 1979393753}
@@ -11855,6 +11872,23 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!114 &1979393755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979393748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15430c97d770c704ba02bb271be4030a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildPokemons:
+  - _base: {fileID: 11400000, guid: 1ed597efd3d640a4b941d40aabb2119f, type: 2}
+    level: 8
+  - _base: {fileID: 11400000, guid: 6e0cb533e145f2546b75973d08d70abf, type: 2}
+    level: 6
 --- !u!1 &1998617115
 GameObject:
   m_ObjectHideFlags: 0
@@ -12304,6 +12338,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9979fe4de455e394685063514105eb62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poketSoulBase: {fileID: 11400000, guid: e6b255c3e5955804fbaa5673ca13581d, type: 2}
-  level: 7
   isPlayerUnit: 1

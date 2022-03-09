@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ab8a80600918346a62bbd1dacc87f6, type: 3}
   m_Name: 99_Kingler
   m_EditorClassIdentifier: 
-  id: 7
-  name: Squirtle
+  id: 99
+  name: Kingler
   description: 
   littleSprite1: {fileID: 0}
   littleSprite2: {fileID: 0}
@@ -32,3 +32,5 @@ MonoBehaviour:
     move: {fileID: 11400000, guid: a276564b0e22fec478e8ddf11dcdd913, type: 2}
   - level: 2
     move: {fileID: 11400000, guid: 6a6e241aa1438bf4c8f02816b877d81a, type: 2}
+  - level: 8
+    move: {fileID: 11400000, guid: 9881becc27dd32141a3e6834db387720, type: 2}

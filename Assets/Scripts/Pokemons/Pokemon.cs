@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using PokemonN;
+
+[System.Serializable]
 public class Pokemon
 {
-    PoketSoulBase _base;
-    int level;
+    [SerializeField] PoketSoulBase _base;
+    [SerializeField] int level;
     int Hp;
     List<Move> moves = new List<Move>(4);
     string name;
 
     public PoketSoulBase Base { get => _base; }
     public int Level { get => level; }
-    public int HP { get => Hp; set => Hp = value;  }
+    public int HP { get => Hp; set => Hp = value; }
     public List<Move> Moves { get => moves; }
     public string Name { get => name; }
 
-    public Pokemon(PoketSoulBase _Base, int lvl)
+    //public Pokemon(PoketSoulBase _Base, int lvl)
+    //{
+    //    _base = _Base;
+    //    level = lvl;
+    //    Init();
+    //}
+
+    public void Init()
     {
-        _base = _Base;
-        level = lvl;
         Hp = MaxHp;
         name = _base.Name;
 

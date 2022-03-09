@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ab8a80600918346a62bbd1dacc87f6, type: 3}
   m_Name: 98_Krabby
   m_EditorClassIdentifier: 
-  id: 7
-  name: Squirtle
+  id: 98
+  name: Krabby
   description: 
   littleSprite1: {fileID: 0}
   littleSprite2: {fileID: 0}
@@ -27,4 +27,6 @@ MonoBehaviour:
   spAttack: 25
   spDefence: 25
   speed: 50
-  learnableMoves: []
+  learnableMoves:
+  - level: 0
+    move: {fileID: 11400000, guid: a276564b0e22fec478e8ddf11dcdd913, type: 2}

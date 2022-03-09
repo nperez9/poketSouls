@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Battle;
+using PokemonN;
 
 public enum GameState { Adventure, Battle };
 public class GameController : MonoBehaviour
@@ -26,7 +27,10 @@ public class GameController : MonoBehaviour
         mainCamera.enabled = false;
         gameState = GameState.Battle;
 
-        battleSystem.StartBattle();
+        PokemonParty pkmParty = playerController.GetComponent<PokemonParty>();
+        Pokemon wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetWildPokemon();
+        
+        battleSystem.StartBattle(pkmParty, wildPokemon);
     }
 
     private void FinishBattle(bool isPlayerWin)

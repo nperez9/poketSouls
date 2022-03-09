@@ -26,26 +26,39 @@ namespace Battle {
         private int currentAction = 0;
         private int currentMove = 0;
 
+        private PokemonParty pokemonParty;
+        private Pokemon enemyPokemon;
+
         private bool firstFrameMove = false;
-        public void StartBattle()
+        public void StartBattle(PokemonParty pkmParty, Pokemon enemyPkm)
         {
+            pokemonParty = pkmParty;
+            enemyPokemon = enemyPkm;
             StartCoroutine(SetupBattle());
         }
 
         public IEnumerator SetupBattle()
         {
-            playerUnit.Setup();
-            playerHud.SetData(playerUnit.Pokemon);
-
-            enemyUnit.Setup();
-            enemyHud.SetData(enemyUnit.Pokemon);
-
-            battleDialogBox.SetMovesText(playerUnit.Pokemon.Moves);
+            SetPlayerPokemon(pokemonParty.GetFirstHealtyPokemon());
+            SetEnemyPokemon();
 
             yield return battleDialogBox.TypeDialog($"A wild {enemyUnit.Pokemon.Base.Name} appears!");
             yield return new WaitForSeconds(1f);
 
             PlayerAction();
+        }
+
+        private void SetPlayerPokemon(Pokemon playerPkm)
+        {
+            playerUnit.Setup(pokemonParty.GetFirstHealtyPokemon());
+            playerHud.SetData(playerUnit.Pokemon);
+            battleDialogBox.SetMovesText(playerUnit.Pokemon.Moves);
+        }
+
+        private void SetEnemyPokemon()
+        {
+            enemyUnit.Setup(enemyPokemon);
+            enemyHud.SetData(enemyUnit.Pokemon);
         }
 
         private void PlayerAction()
@@ -189,11 +202,11 @@ namespace Battle {
             yield return new WaitForSeconds(1f);
             enemyUnit.PlayHitAnimation();
 
-            DamageDetails dd = enemyUnit.Pokemon.TakeDemage(move, playerUnit.Pokemon);
+            DamageDetails EnemyDemageDetails = enemyUnit.Pokemon.TakeDemage(move, playerUnit.Pokemon);
             yield return enemyHud.UpdateHP();
-            yield return DamageDialog(dd);
+            yield return DamageDialog(EnemyDemageDetails);
 
-            if (dd.Fainted)
+            if (EnemyDemageDetails.Fainted)
             {
                 yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} Faints!");
                 enemyUnit.PlayFaintAnimation();
@@ -219,16 +232,29 @@ namespace Battle {
             yield return new WaitForSeconds(1f);
             playerUnit.PlayHitAnimation();
 
-            DamageDetails dd = playerUnit.Pokemon.TakeDemage(move, enemyUnit.Pokemon);
+            DamageDetails PlayerDamageDetails = playerUnit.Pokemon.TakeDemage(move, enemyUnit.Pokemon);
             yield return playerHud.UpdateHP();
-            yield return DamageDialog(dd);
+            yield return DamageDialog(PlayerDamageDetails);
 
-            if (dd.Fainted)
+            if (PlayerDamageDetails.Fainted)
             {
                 yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
                 playerUnit.PlayFaintAnimation();
                 yield return new WaitForSeconds(1.5f);
-                OnBattleEnd(false);
+
+                Pokemon nextPokemon = pokemonParty.GetFirstHealtyPokemon();
+
+                if(nextPokemon != null)
+                {
+                    SetPlayerPokemon(nextPokemon);
+                    yield return battleDialogBox.TypeDialog($"Go! {nextPokemon.Name}!");
+                    yield return new WaitForSeconds(1f);
+                    PlayerAction();
+                }
+                else
+                {
+                    OnBattleEnd(false);
+                }
             } 
             else
             {

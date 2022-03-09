@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,12 +7,9 @@ using DG.Tweening;
 namespace Battle { 
     public class BattleUnit : MonoBehaviour
     {
-        [SerializeField] PoketSoulBase poketSoulBase;
-        [SerializeField] int level = 0;
-        // Defines the sprite to use
-        [SerializeField] bool isPlayerUnit;
         public Pokemon Pokemon { set; get; }
 
+        [SerializeField] private bool isPlayerUnit = false;
         private Image image;
         private Vector3 originalPosition;
         private Color originalColor;
@@ -26,11 +21,12 @@ namespace Battle {
             originalColor = image.color;
         }
 
-        public void Setup()
+        public void Setup(Pokemon pokemon)
         {
-            Pokemon = new Pokemon(poketSoulBase, level);
+            Pokemon = pokemon;
             image.sprite = isPlayerUnit ? Pokemon.Base.BackSprite : Pokemon.Base.FrontSprite;
             image.color = originalColor;
+            image.transform.localPosition = originalPosition;
             PlaySetupAnimation();
         }
 
