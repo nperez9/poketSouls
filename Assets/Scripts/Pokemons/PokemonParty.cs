@@ -7,6 +7,11 @@ namespace PokemonN {
     public class PokemonParty : MonoBehaviour
     {
         [SerializeField] private List<Pokemon> pokemonParty;
+        
+        public List<Pokemon> GetPokemonsList()
+        {
+            return pokemonParty;
+        }
 
         private void Start()
         {
