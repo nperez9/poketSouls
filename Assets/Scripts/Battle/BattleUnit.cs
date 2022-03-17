@@ -8,8 +8,12 @@ namespace Battle {
     public class BattleUnit : MonoBehaviour
     {
         public Pokemon Pokemon { set; get; }
+        public bool IsPlayerUnit { get => isPlayerUnit; }
+        public BattleHud HUD { get => hud; }
 
         [SerializeField] private bool isPlayerUnit = false;
+        [SerializeField] BattleHud hud = null;
+
         private Image image;
         private Vector3 originalPosition;
         private Color originalColor;
@@ -27,6 +31,8 @@ namespace Battle {
             image.sprite = isPlayerUnit ? Pokemon.Base.BackSprite : Pokemon.Base.FrontSprite;
             image.color = originalColor;
             image.transform.localPosition = originalPosition;
+
+            hud.SetData(pokemon);
             PlaySetupAnimation();
         }
 

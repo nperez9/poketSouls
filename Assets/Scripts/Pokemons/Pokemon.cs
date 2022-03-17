@@ -79,6 +79,8 @@ public class Pokemon
             critical = 1.5f;
         }
         float typeEffect = TypeCharts.GetTypeEffectiveness(move.Base.Type, Base.Type1, Base.Type2);
+        // stab: if the attacker pokemon has the same type tan the attack does 50% more demage;
+        float stab = move.Base.Type == attacker.Base.Type1 || move.Base.Type == attacker.Base.Type2 ? 1.5f : 1f;
         bool fainted = false;
 
         // In case of status change, the damage will be 1
@@ -96,7 +98,7 @@ public class Pokemon
             defense = this.Defense;
         }
 
-        int damage = CalculateDamage(move, critical, typeEffect, attacker.Level, attack, defense);
+        int damage = CalculateDamage(move, critical, typeEffect, stab, attacker.Level, attack, defense);
 
         HP -= damage;
 
@@ -119,9 +121,10 @@ public class Pokemon
     }
 
     // this function use original pokemon(red, blue, green) calcule
-    private int CalculateDamage(Move move, float critical, float typeEffect, int attackerLevel, int attack, int defense)
+    // TODO: Update to a modern pokemon game
+    private int CalculateDamage(Move move, float critical, float typeEffect, float stab, int attackerLevel, int attack, int defense)
     {
-        float modifiers = Random.Range(0.85f, 1f) * critical * typeEffect;
+        float modifiers = Random.Range(0.85f, 1f) * critical * typeEffect * stab;
         float a = (2 * attackerLevel + 10) / 250f;
         float b = a * move.Base.Power * ((float)attack / defense) + 2;
         return Mathf.FloorToInt(b * modifiers);
