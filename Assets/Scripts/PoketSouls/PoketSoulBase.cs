@@ -79,10 +79,20 @@ public enum PokemonType
     Fairy
 }
 
+public enum PokemonStat
+{
+    Hp,
+    Attack,
+    Defense,
+    SpAttack,
+    SpDefence,
+    Speed
+}
+
 public class TypeCharts
 {
     public static float[][] chart = {
-        //NOR|FIR|WAT|ELE|GRA|ICE|FIG|POI|GRO|FLY|PSY|BUG|ROC|GHO|DAR|DRA|STE|FAI|
+        /*                    NOR|FIR|WAT|ELE|GRA|ICE|FIG|POI|GRO|FLY|PSY|BUG|ROC|GHO|DAR|DRA|STE|FAI|              */
         /*NOR*/ new float[] { 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 0.5f, 0f, 1f, 1f, 0.5f, 1f },
         /*FIR*/ new float[] { 1f, 0.5f, 0.5f, 1f, 2f, 2f, 1f, 1f, 1f, 1f, 1f, 2f, 0.5f, 1f, 1f, 0.5f, 2f, 1f },
         /*WAT*/ new float[] { 1f, 2f, 0.5f, 1f, 0.5f, 1f, 1f, 1f, 2f, 1f, 1f, 1f, 2f, 1f, 1f, 0.5f, 1f, 1f },

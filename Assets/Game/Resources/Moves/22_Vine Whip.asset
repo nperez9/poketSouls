@@ -16,7 +16,10 @@ MonoBehaviour:
   name: Vine Whip
   description: Basic grass attack
   type: 5
-  category: 0
+  category: 1
+  effect:
+    statBoosts: []
+  target: 0
   power: 45
   accuracy: 100
   pp: 15

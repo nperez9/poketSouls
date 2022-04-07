@@ -303,7 +303,6 @@ namespace Battle {
 
         IEnumerator ExecuteMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
         {
-
             yield return battleDialogBox.TypeDialog($"{sourceUnit.Pokemon.Name}! Use {move.Base.Name}!");
             yield return new WaitForSeconds(1f);
 
@@ -311,25 +310,44 @@ namespace Battle {
             yield return new WaitForSeconds(1f);
             targetUnit.PlayHitAnimation();
 
-            DamageDetails TargetDemageDetails = targetUnit.Pokemon.TakeDemage(move, sourceUnit.Pokemon);
-            yield return targetUnit.HUD.UpdateHP();
-            yield return DamageDialog(TargetDemageDetails);
-
-            if (TargetDemageDetails.Fainted)
+            if (move.Base.Category == MoveCategory.Status)
             {
-                if (targetUnit.IsPlayerUnit)
+                // TODO: Do something
+                var effect = move.Base.Effect;
+                if (effect.statBoosts != null)
                 {
-                    yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
+                    if (move.Base.Target == MoveTarget.Self)
+                    {
+                        sourceUnit.Pokemon.ApplyBoost(effect.statBoosts);
+                    }
+                    else
+                    {
+                        targetUnit.Pokemon.ApplyBoost(effect.statBoosts);
+                    }
                 }
-                else
+            } 
+            else 
+            { 
+                DamageDetails TargetDemageDetails = targetUnit.Pokemon.TakeDemage(move, sourceUnit.Pokemon);
+                yield return targetUnit.HUD.UpdateHP();
+                yield return DamageDialog(TargetDemageDetails);
+
+                if (TargetDemageDetails.Fainted)
                 {
-                    yield return battleDialogBox.TypeDialog($"{targetUnit.Pokemon.Name} Faints!");
+                    if (targetUnit.IsPlayerUnit)
+                    {
+                        yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
+                    }
+                    else
+                    {
+                        yield return battleDialogBox.TypeDialog($"{targetUnit.Pokemon.Name} Faints!");
+                    }
+
+                    targetUnit.PlayFaintAnimation();
+                    yield return new WaitForSeconds(1.5f);
+
+                    CheckForBattleEnd(targetUnit);
                 }
-
-                targetUnit.PlayFaintAnimation();
-                yield return new WaitForSeconds(1.5f);
-
-                CheckForBattleEnd(targetUnit);
             }
         }
 

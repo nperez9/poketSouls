@@ -11,6 +11,8 @@ public class MoveBase : ScriptableObject
 
     [SerializeField] PokemonType type;
     [SerializeField] MoveCategory category;
+    [SerializeField] MoveEffect effect;
+    [SerializeField] MoveTarget target;
     
     [SerializeField] int power;
     [SerializeField] int accuracy;
@@ -21,6 +23,8 @@ public class MoveBase : ScriptableObject
     public string Description { get => description; }
     public PokemonType Type { get => type; }
     public MoveCategory Category { get => category; }
+    public MoveEffect Effect { get => effect; }
+    public MoveTarget Target { get => target; }
     public int Power { get => power; }
     public int Accuracy { get => accuracy; }
     public int Pp { get => pp; }
@@ -32,4 +36,23 @@ public enum MoveCategory
     Physical,
     Special,
     Status,
+}
+
+[System.Serializable]
+public class MoveEffect
+{
+    public List<StatBoost> statBoosts;
+}
+
+// todo, apply this to statboost
+[System.Serializable]
+public class StatBoost
+{
+    public PokemonStat stat;
+    public int boost;
+}
+
+public enum MoveTarget
+{
+    Foe, Self
 }

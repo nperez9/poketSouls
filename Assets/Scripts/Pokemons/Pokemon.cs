@@ -9,26 +9,21 @@ public class Pokemon
 {
     [SerializeField] PoketSoulBase _base;
     [SerializeField] int level;
-    int Hp;
-    List<Move> moves = new List<Move>(4);
-    string name;
+    private int Hp;
+    private List<Move> moves = new List<Move>(4);
+    private string name;
 
     public PoketSoulBase Base { get => _base; }
     public int Level { get => level; }
     public int HP { get => Hp; set => Hp = value; }
     public List<Move> Moves { get => moves; }
-    public string Name { get => name; }
+    public Dictionary<PokemonStat, int> Stats { get; private set; }
+    public Dictionary<PokemonStat, int> StatsBoost { get; private set; }
 
-    //public Pokemon(PoketSoulBase _Base, int lvl)
-    //{
-    //    _base = _Base;
-    //    level = lvl;
-    //    Init();
-    //}
+    public string Name { get => name; }
 
     public void Init()
     {
-        Hp = MaxHp;
         name = _base.Name;
 
         // add moves in base of the learnedStuff
@@ -44,31 +39,48 @@ public class Pokemon
                 break;
             }
         }
+
+        CalculateAndSaveStats();
+        InitializeStatsBoost();
+
+        // Set hp after calculated stats
+        Hp = MaxHp;
+    }
+
+    public void ApplyBoost(List<StatBoost> statBoosts) 
+    {
+        foreach (StatBoost statBoost in statBoosts)
+        {
+            PokemonStat stat = statBoost.stat;
+            int boostValue = statBoost.boost;
+
+            this.StatsBoost[stat] = Mathf.Clamp(this.StatsBoost[stat] + boostValue, 6, -6);
+        }
     }
 
     public int Attack
     {
-        get { return Mathf.FloorToInt((_base.Attack * level) / 100f) + 5; }
+        get { return GetStat(PokemonStat.Attack); }
     }
     public int Defense
     {
-        get { return Mathf.FloorToInt((_base.Defence * level) / 100f) + 5; }
+        get { return GetStat(PokemonStat.Defense); }
     }
     public int Speed
     {
-        get { return Mathf.FloorToInt((_base.Speed * level) / 100f) + 5; }
+        get { return GetStat(PokemonStat.Speed); }
     }
     public int SpAttack
     {
-        get { return Mathf.FloorToInt((_base.SpAttack * level) / 100f) + 5; }
+        get { return GetStat(PokemonStat.SpAttack); }
     }
     public int SpDefense
     {
-        get { return Mathf.FloorToInt((_base.SpDefence * level) / 100f) + 5; }
+        get { return GetStat(PokemonStat.SpDefence); }
     }
     public int MaxHp
     {
-        get { return Mathf.FloorToInt((_base.MaxHp * level) / 100f) + 10; }
+        get { return Stats[PokemonStat.Hp]; }
     }
 
     // this is how works in pokemon
@@ -128,5 +140,54 @@ public class Pokemon
         float a = (2 * attackerLevel + 10) / 250f;
         float b = a * move.Base.Power * ((float)attack / defense) + 2;
         return Mathf.FloorToInt(b * modifiers);
+    }
+
+    private void CalculateAndSaveStats()
+    {
+        Stats = new Dictionary<PokemonStat, int>();
+        Stats.Add(PokemonStat.Hp, CalculateStat(_base.MaxHp));
+        Stats.Add(PokemonStat.Attack, CalculateStat(_base.Attack));
+        Stats.Add(PokemonStat.Defense, CalculateStat(_base.Defence));
+        Stats.Add(PokemonStat.SpAttack, CalculateStat(_base.SpAttack));
+        Stats.Add(PokemonStat.SpDefence, CalculateStat(_base.SpDefence));
+        Stats.Add(PokemonStat.Speed, CalculateStat(_base.Speed));
+    }
+
+    private void InitializeStatsBoost()
+    {
+        // cant't boost hp
+        StatsBoost = new Dictionary<PokemonStat, int>() {
+            { PokemonStat.Hp, 0 },
+            { PokemonStat.Attack, 0 },
+            { PokemonStat.Defense, 0 },
+            { PokemonStat.SpAttack, 0 },
+            { PokemonStat.SpDefence, 0 },
+            { PokemonStat.Speed, 0 },
+        };
+    }
+
+    private int CalculateStat(int baseValue) 
+    {
+        return Mathf.FloorToInt((baseValue * level) / 100f) + 5;
+    }
+
+
+    private int GetStat(PokemonStat stat)
+    {
+        int value = Stats[stat];
+        int statBoost = StatsBoost[stat];
+
+        var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f };
+        
+        if (statBoost >= 0)
+        {
+            value = Mathf.FloorToInt(value * boostValues[statBoost]);
+        }
+        else
+        {
+            value = Mathf.FloorToInt(value / boostValues[-statBoost]);
+        }
+
+        return value;
     }
 }
