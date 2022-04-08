@@ -54,7 +54,7 @@ public class Pokemon
             PokemonStat stat = statBoost.stat;
             int boostValue = statBoost.boost;
 
-            this.StatsBoost[stat] = Mathf.Clamp(this.StatsBoost[stat] + boostValue, 6, -6);
+            this.StatsBoost[stat] = Mathf.Clamp(this.StatsBoost[stat] + boostValue, -6, 6);
         }
     }
 
@@ -185,9 +185,10 @@ public class Pokemon
         }
         else
         {
-            value = Mathf.FloorToInt(value / boostValues[-statBoost]);
+            value = Mathf.FloorToInt(value / boostValues[statBoost * -1]);
         }
 
+        Debug.Log($"return {stat} at | {statBoost}");
         return value;
     }
 }
