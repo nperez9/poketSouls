@@ -19,6 +19,7 @@ public class Pokemon
     public List<Move> Moves { get => moves; }
     public Dictionary<PokemonStat, int> Stats { get; private set; }
     public Dictionary<PokemonStat, int> StatsBoost { get; private set; }
+    public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
 
     public string Name { get => name; }
 
@@ -55,6 +56,9 @@ public class Pokemon
             int boostValue = statBoost.boost;
 
             this.StatsBoost[stat] = Mathf.Clamp(this.StatsBoost[stat] + boostValue, -6, 6);
+
+            string statAction = (boostValue > 0) ? "rise" : "fell";
+            StatusChanges.Enqueue($"{this.Name}'s {stat} {statAction}!");
         }
     }
 
@@ -132,6 +136,11 @@ public class Pokemon
         };
     }
 
+    public void OnBattleOver()
+    {
+        InitializeStatsBoost();
+    }
+
     // this function use original pokemon(red, blue, green) calcule
     // TODO: Update to a modern pokemon game
     private int CalculateDamage(Move move, float critical, float typeEffect, float stab, int attackerLevel, int attack, int defense)
@@ -188,7 +197,6 @@ public class Pokemon
             value = Mathf.FloorToInt(value / boostValues[statBoost * -1]);
         }
 
-        Debug.Log($"return {stat} at | {statBoost}");
         return value;
     }
 }

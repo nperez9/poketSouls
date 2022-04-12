@@ -104,6 +104,8 @@ namespace Battle {
         private void BattleOver(bool won)
         {
             state = BattleStates.BattleOver;
+            // reset all the status boost
+            pokemonParty.GetPokemonsList().ForEach(p => p.OnBattleOver());
             OnBattleEnd(won);
         }
 
@@ -243,7 +245,7 @@ namespace Battle {
                 battleDialogBox.SetEnabledActionBox(false);
                 battleDialogBox.SetEnabledMoveBox(false);
 
-                StartCoroutine(ExecutePlayerMove());
+                StartCoroutine(ExecuteBattleTurn());
             }
 
             firstFrameMove = false;
@@ -274,6 +276,36 @@ namespace Battle {
             }
         }
 
+        IEnumerator ExecuteBattleTurn()
+        {
+            if (playerUnit.Pokemon.Speed >= enemyUnit.Pokemon.Speed)
+            {
+                yield return ExecutePlayerMove();
+                if (state == BattleStates.PerformMove)
+                {
+                    yield return ExecuteEnemyMove();
+                    
+                    if (state == BattleStates.PerformMove)
+                    {
+                        ActionSelection();
+                    }
+                }
+            }
+            else
+            {
+                yield return ExecuteEnemyMove();
+                if (state == BattleStates.PerformMove)
+                {
+                    yield return ExecutePlayerMove();
+
+                    if (state == BattleStates.PerformMove)
+                    {
+                        ActionSelection();
+                    }
+                }
+            }
+        }
+
         IEnumerator ExecutePlayerMove()
         {
             state = BattleStates.PerformMove;
@@ -281,11 +313,6 @@ namespace Battle {
 
             yield return ExecuteMove(playerUnit, enemyUnit, move);
             // make this on speed base 
-
-            if (state == BattleStates.PerformMove)
-            {
-                StartCoroutine(ExecuteEnemyMove());
-            }
         }
 
         IEnumerator ExecuteEnemyMove()
@@ -294,11 +321,6 @@ namespace Battle {
             Move move = enemyUnit.Pokemon.Moves[(int)Random.Range(0, enemyUnit.Pokemon.Moves.Count)];
 
             yield return ExecuteMove(enemyUnit, playerUnit, move);
-
-            if (state == BattleStates.PerformMove)
-            {                
-                ActionSelection();
-            }
         }
 
         IEnumerator ExecuteMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
@@ -312,19 +334,8 @@ namespace Battle {
 
             if (move.Base.Category == MoveCategory.Status)
             {
-                // TODO: Do something
-                var effect = move.Base.Effect;
-                if (effect.statBoosts != null)
-                {
-                    if (move.Base.Target == MoveTarget.Self)
-                    {
-                        sourceUnit.Pokemon.ApplyBoost(effect.statBoosts);
-                    }
-                    else
-                    {
-                        targetUnit.Pokemon.ApplyBoost(effect.statBoosts);
-                    }
-                }
+                yield return StatusMove(move, sourceUnit.Pokemon, targetUnit.Pokemon);
+                move.PP--;
             } 
             else 
             { 
@@ -348,6 +359,34 @@ namespace Battle {
 
                     CheckForBattleEnd(targetUnit);
                 }
+            }
+        }
+
+        IEnumerator StatusMove(Move move, Pokemon sourcePkm, Pokemon targetPkm)
+        {
+            var effect = move.Base.Effect;
+            if (effect.statBoosts != null)
+            {
+                if (move.Base.Target == MoveTarget.Self)
+                {
+                    sourcePkm.ApplyBoost(effect.statBoosts);
+                    yield return ShowStatusMessages(sourcePkm);
+                }
+                else
+                {
+                    targetPkm.ApplyBoost(effect.statBoosts);
+                    yield return ShowStatusMessages(targetPkm);
+                }
+            }
+        }
+
+        IEnumerator ShowStatusMessages(Pokemon pkm)
+        {
+            while (pkm.StatusChanges.Count > 0)
+            {
+                string message = pkm.StatusChanges.Dequeue();
+                yield return battleDialogBox.TypeDialog(message);
+                yield return new WaitForSeconds(1);
             }
         }
 
