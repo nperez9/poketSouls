@@ -284,11 +284,6 @@ namespace Battle {
                 if (state == BattleStates.PerformMove)
                 {
                     yield return ExecuteEnemyMove();
-                    
-                    if (state == BattleStates.PerformMove)
-                    {
-                        ActionSelection();
-                    }
                 }
             }
             else
@@ -297,12 +292,15 @@ namespace Battle {
                 if (state == BattleStates.PerformMove)
                 {
                     yield return ExecutePlayerMove();
-
-                    if (state == BattleStates.PerformMove)
-                    {
-                        ActionSelection();
-                    }
                 }
+            }
+
+            yield return AfterTurn();
+            
+            // this means that the battle continues
+            if (state == BattleStates.PerformMove)
+            {
+                ActionSelection();
             }
         }
 
@@ -335,32 +333,55 @@ namespace Battle {
             if (move.Base.Category == MoveCategory.Status)
             {
                 yield return StatusMove(move, sourceUnit.Pokemon, targetUnit.Pokemon);
-                move.PP--;
             } 
             else 
             { 
                 DamageDetails TargetDemageDetails = targetUnit.Pokemon.TakeDemage(move, sourceUnit.Pokemon);
                 yield return targetUnit.HUD.UpdateHP();
                 yield return DamageDialog(TargetDemageDetails);
+                yield return CheckFaintedPokemon(targetUnit);
+            }
 
-                if (TargetDemageDetails.Fainted)
+            move.PP--;
+        }
+
+        // TODO: Improve performance of this thing
+        IEnumerator AfterTurn()
+        {
+            playerUnit.Pokemon.OnAfterTurn();
+            enemyUnit.Pokemon.OnAfterTurn();
+
+            yield return ShowStatusMessages(playerUnit.Pokemon);
+            yield return ShowStatusMessages(enemyUnit.Pokemon);
+
+            // TODO: improve update hp with the flag (end of chapter 20)
+            playerUnit.HUD.UpdateHP();
+            enemyUnit.HUD.UpdateHP();
+
+            yield return CheckFaintedPokemon(playerUnit);
+            yield return CheckFaintedPokemon(enemyUnit);
+        }
+
+        IEnumerator CheckFaintedPokemon(BattleUnit unitToCheck)
+        {
+            if (unitToCheck.Pokemon.MaxHp <= 0)
+            {
+                if (unitToCheck.IsPlayerUnit)
                 {
-                    if (targetUnit.IsPlayerUnit)
-                    {
-                        yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
-                    }
-                    else
-                    {
-                        yield return battleDialogBox.TypeDialog($"{targetUnit.Pokemon.Name} Faints!");
-                    }
-
-                    targetUnit.PlayFaintAnimation();
-                    yield return new WaitForSeconds(1.5f);
-
-                    CheckForBattleEnd(targetUnit);
+                    yield return battleDialogBox.TypeDialog($"Your {playerUnit.Pokemon.Name} faints!");
                 }
+                else
+                {
+                    yield return battleDialogBox.TypeDialog($"{enemyUnit.Pokemon.Name} Faints!");
+                }
+
+                unitToCheck.PlayFaintAnimation();
+                yield return new WaitForSeconds(1.5f);
+
+                CheckForBattleEnd(unitToCheck);
             }
         }
+        
 
         IEnumerator StatusMove(Move move, Pokemon sourcePkm, Pokemon targetPkm)
         {
@@ -370,14 +391,21 @@ namespace Battle {
                 if (move.Base.Target == MoveTarget.Self)
                 {
                     sourcePkm.ApplyBoost(effect.statBoosts);
-                    yield return ShowStatusMessages(sourcePkm);
                 }
                 else
                 {
                     targetPkm.ApplyBoost(effect.statBoosts);
-                    yield return ShowStatusMessages(targetPkm);
+                    
                 }
             }
+
+            if (effect.Status != Data.ConditionID.none)
+            {
+                targetPkm.ApplyCondition(effect.Status);
+            }
+
+            yield return ShowStatusMessages(targetPkm);
+            yield return ShowStatusMessages(sourcePkm);
         }
 
         IEnumerator ShowStatusMessages(Pokemon pkm)

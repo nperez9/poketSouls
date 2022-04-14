@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Data;
+
 [CreateAssetMenu(fileName = "Move", menuName ="Pokemon/Create new Move", order = 2)]
 public class MoveBase : ScriptableObject
 {
@@ -41,7 +43,13 @@ public enum MoveCategory
 [System.Serializable]
 public class MoveEffect
 {
+    [SerializeField] private ConditionID status;
+    [SerializeField] private int provability = 0;
+    
     public List<StatBoost> statBoosts;
+    public ConditionID Status { get => status; }
+    public int Provability { get => provability; }
+    
 }
 
 // todo, apply this to statboost

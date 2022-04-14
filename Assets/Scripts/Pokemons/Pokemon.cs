@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using PokemonN;
+using Data;
 
 [System.Serializable]
 public class Pokemon
@@ -20,6 +21,8 @@ public class Pokemon
     public Dictionary<PokemonStat, int> Stats { get; private set; }
     public Dictionary<PokemonStat, int> StatsBoost { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+
+    public Condition Status { get; private set; }
 
     public string Name { get => name; }
 
@@ -43,6 +46,7 @@ public class Pokemon
 
         CalculateAndSaveStats();
         InitializeStatsBoost();
+        InitializeStatus();
 
         // Set hp after calculated stats
         Hp = MaxHp;
@@ -59,6 +63,19 @@ public class Pokemon
 
             string statAction = (boostValue > 0) ? "rise" : "fell";
             StatusChanges.Enqueue($"{this.Name}'s {stat} {statAction}!");
+        }
+    }
+
+    public void ApplyCondition(ConditionID conditionID)
+    {
+        if (Status.Name == "None") 
+        { 
+            Status = ConditionsDB.Conditions[conditionID];
+            StatusChanges.Enqueue($"{this.Name} {Status.StartMessage}");
+        }
+        else
+        {
+            StatusChanges.Enqueue($"{this.Name} is {Status.Name}, And the effect not apply...");
         }
     }
 
@@ -116,29 +133,56 @@ public class Pokemon
 
         int damage = CalculateDamage(move, critical, typeEffect, stab, attacker.Level, attack, defense);
 
-        HP -= damage;
-
-        // if pokemon faints, return false
-        if (HP <= 0)
-        {
-            HP = 0;
-            fainted = true;
-        }
-
-        // before return, reduce the movePP
-        move.PP--;
+        UpdateHP(damage, true);
 
         return new DamageDetails()
         {
             Critical = critical,
             TypeEffect = typeEffect,
-            Fainted = fainted,
         };
+    }
+
+    public void UpdateHP(int change, bool isDamage = true)    
+    {
+        int roundedChange = Mathf.Clamp(change, 0, MaxHp);
+        if (isDamage)
+        {
+            HP -= roundedChange;
+        }
+        else
+        {
+            HP += roundedChange;
+        }
+    }
+
+    // TODO: maybe an overload it's not the best implementation for posion damage
+    public void UpdateHP(float change, bool isDamage = true)
+    {
+        int roundedChange = Mathf.Clamp((int)Mathf.Round(change), 0, MaxHp);
+        if (isDamage)
+        {
+            HP -= roundedChange;
+        }
+        else
+        {
+            HP += roundedChange;
+        }
+
     }
 
     public void OnBattleOver()
     {
         InitializeStatsBoost();
+    }
+
+    public void OnAfterTurn()
+    {
+        Status.OnAferTurn?.Invoke(this);
+    }
+
+    public void OnBeforeMove()
+    {
+        Status.OnBeforeMove?.Invoke(this);
     }
 
     // this function use original pokemon(red, blue, green) calcule
@@ -173,6 +217,11 @@ public class Pokemon
             { PokemonStat.SpDefence, 0 },
             { PokemonStat.Speed, 0 },
         };
+    }
+
+    private void InitializeStatus()
+    {
+        Status = ConditionsDB.Conditions[ConditionID.none];
     }
 
     private int CalculateStat(int baseValue) 

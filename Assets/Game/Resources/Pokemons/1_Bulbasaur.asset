@@ -35,4 +35,4 @@ MonoBehaviour:
   - level: 6
     move: {fileID: 11400000, guid: 44ec7e9d4773d4f4fb80ca7e4390d3a3, type: 2}
   - level: 10
-    move: {fileID: 11400000, guid: aac88e8102782d44abc12605f8f29d0d, type: 2}
+    move: {fileID: 11400000, guid: 79f14e521fe362e4f91e50c867408c53, type: 2}
