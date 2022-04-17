@@ -144,7 +144,7 @@ public class Pokemon
 
     public void UpdateHP(int change, bool isDamage = true)    
     {
-        int roundedChange = Mathf.Clamp(change, 0, MaxHp);
+        int roundedChange = Mathf.Clamp(change, 0, HP);
         if (isDamage)
         {
             HP -= roundedChange;
@@ -156,19 +156,6 @@ public class Pokemon
     }
 
     // TODO: maybe an overload it's not the best implementation for posion damage
-    public void UpdateHP(float change, bool isDamage = true)
-    {
-        int roundedChange = Mathf.Clamp((int)Mathf.Round(change), 0, MaxHp);
-        if (isDamage)
-        {
-            HP -= roundedChange;
-        }
-        else
-        {
-            HP += roundedChange;
-        }
-
-    }
 
     public void OnBattleOver()
     {

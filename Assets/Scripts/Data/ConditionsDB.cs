@@ -22,7 +22,9 @@ namespace Data {
                     StartMessage = "Has been poisoned",
                     OnAferTurn = (Pokemon pkm) =>
                     {
-                        pkm.UpdateHP(pkm.MaxHp / 8);
+                        int poisonDamage = pkm.MaxHp / 8;
+                        poisonDamage = (poisonDamage < 1) ? 1 : poisonDamage;
+                        pkm.UpdateHP(poisonDamage, true);
                         pkm.StatusChanges.Enqueue($"{pkm.Name} it's hurt by poison");
                     }
                 }

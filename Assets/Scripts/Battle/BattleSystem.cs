@@ -273,6 +273,11 @@ namespace Battle {
             else
             {
                 yield return ExecuteEnemyMove();
+                yield return AfterTurn();
+                if (state != BattleStates.BattleOver)
+                {
+                    ActionSelection();
+                }
             }
         }
 
@@ -298,7 +303,7 @@ namespace Battle {
             yield return AfterTurn();
             
             // this means that the battle continues
-            if (state == BattleStates.PerformMove)
+            if (state != BattleStates.BattleOver)
             {
                 ActionSelection();
             }
@@ -330,6 +335,7 @@ namespace Battle {
             yield return new WaitForSeconds(1f);
             targetUnit.PlayHitAnimation();
 
+            move.PP--;
             if (move.Base.Category == MoveCategory.Status)
             {
                 yield return StatusMove(move, sourceUnit.Pokemon, targetUnit.Pokemon);
@@ -341,8 +347,6 @@ namespace Battle {
                 yield return DamageDialog(TargetDemageDetails);
                 yield return CheckFaintedPokemon(targetUnit);
             }
-
-            move.PP--;
         }
 
         // TODO: Improve performance of this thing
@@ -355,8 +359,8 @@ namespace Battle {
             yield return ShowStatusMessages(enemyUnit.Pokemon);
 
             // TODO: improve update hp with the flag (end of chapter 20)
-            playerUnit.HUD.UpdateHP();
-            enemyUnit.HUD.UpdateHP();
+            yield return playerUnit.HUD.UpdateHP();
+            yield return enemyUnit.HUD.UpdateHP();
 
             yield return CheckFaintedPokemon(playerUnit);
             yield return CheckFaintedPokemon(enemyUnit);
@@ -364,7 +368,7 @@ namespace Battle {
 
         IEnumerator CheckFaintedPokemon(BattleUnit unitToCheck)
         {
-            if (unitToCheck.Pokemon.MaxHp <= 0)
+            if (unitToCheck.Pokemon.HP <= 0)
             {
                 if (unitToCheck.IsPlayerUnit)
                 {
