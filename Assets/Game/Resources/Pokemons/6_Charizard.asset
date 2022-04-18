@@ -10,20 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0ab8a80600918346a62bbd1dacc87f6, type: 3}
-  m_Name: 4_Charmander 1
+  m_Name: 6_Charizard
   m_EditorClassIdentifier: 
-  id: 4
-  name: 
+  id: 6
+  name: Charizar
   description: 
   littleSprite1: {fileID: 0}
   littleSprite2: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: d17500803d78bad47adb033f24471534, type: 3}
   backSprite: {fileID: 21300000, guid: e52d7d14099d85542823b97bc5d6f42f, type: 3}
   type1: 2
-  type2: 0
-  maxHp: 39
-  attack: 52
-  defence: 43
-  spAttack: 60
-  spDefence: 50
-  speed: 65
+  type2: 10
+  maxHp: 78
+  attack: 84
+  defence: 78
+  spAttack: 109
+  spDefence: 85
+  speed: 100
+  learnableMoves:
+  - level: 1
+    move: {fileID: 11400000, guid: 1c13f2a7be5983843b7481b1229f013a, type: 2}

@@ -13,6 +13,7 @@ public class Pokemon
     private int Hp;
     private List<Move> moves = new List<Move>(4);
     private string name;
+    private int statusTime = 0;
 
     public PoketSoulBase Base { get => _base; }
     public int Level { get => level; }
@@ -21,6 +22,7 @@ public class Pokemon
     public Dictionary<PokemonStat, int> Stats { get; private set; }
     public Dictionary<PokemonStat, int> StatsBoost { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+    public int StatusTime { get => statusTime; set => statusTime = value; }
 
     public Condition Status { get; private set; }
 
@@ -71,6 +73,7 @@ public class Pokemon
         if (Status.Name == "None") 
         { 
             Status = ConditionsDB.Conditions[conditionID];
+            Status?.OnStart?.Invoke(this);
             StatusChanges.Enqueue($"{this.Name} {Status.StartMessage}");
         }
         else
@@ -144,18 +147,18 @@ public class Pokemon
 
     public void UpdateHP(int change, bool isDamage = true)    
     {
-        int roundedChange = Mathf.Clamp(change, 0, HP);
         if (isDamage)
         {
+            int roundedChange = Mathf.Clamp(change, 0, HP);
             HP -= roundedChange;
         }
         else
         {
+            // for pokemon heailng
+            int roundedChange = Mathf.Clamp(change, 0, MaxHp);
             HP += roundedChange;
         }
     }
-
-    // TODO: maybe an overload it's not the best implementation for posion damage
 
     public void OnBattleOver()
     {
@@ -167,10 +170,24 @@ public class Pokemon
         Status.OnAferTurn?.Invoke(this);
     }
 
-    public void OnBeforeMove()
+    public bool OnBeforeMove()
     {
-        Status.OnBeforeMove?.Invoke(this);
+        if (Status.OnBeforeMove != null)
+        {
+            return Status.OnBeforeMove(this);
+        }
+        return true;
     }
+
+    public void CureStatus()
+    {
+        Status = ConditionsDB.Conditions[ConditionID.none];
+    }
+
+    public bool IsFireType()
+    {
+        return (this.Base.Type1 == PokemonType.Fire || this.Base.Type2 == PokemonType.Fire);
+    } 
 
     // this function use original pokemon(red, blue, green) calcule
     // TODO: Update to a modern pokemon game

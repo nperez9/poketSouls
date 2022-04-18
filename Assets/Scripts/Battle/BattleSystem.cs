@@ -328,6 +328,15 @@ namespace Battle {
 
         IEnumerator ExecuteMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
         {
+            bool canRunMove = sourceUnit.Pokemon.OnBeforeMove();
+            yield return ShowStatusMessages(sourceUnit.Pokemon);
+
+            if (!canRunMove)
+            {
+                yield break;
+            }
+            move.PP--;
+            
             yield return battleDialogBox.TypeDialog($"{sourceUnit.Pokemon.Name}! Use {move.Base.Name}!");
             yield return new WaitForSeconds(1f);
 
@@ -335,7 +344,6 @@ namespace Battle {
             yield return new WaitForSeconds(1f);
             targetUnit.PlayHitAnimation();
 
-            move.PP--;
             if (move.Base.Category == MoveCategory.Status)
             {
                 yield return StatusMove(move, sourceUnit.Pokemon, targetUnit.Pokemon);
