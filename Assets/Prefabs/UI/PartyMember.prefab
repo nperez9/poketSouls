@@ -226,6 +226,7 @@ MonoBehaviour:
   nameText: {fileID: 3147530279768193330}
   LevelText: {fileID: 3147530279635071248}
   hpBar: {fileID: 3147530278432112420}
+  miniImage: {fileID: 8204320622095713017}
   higthligthedColor: {r: 0.21586864, g: 0.6653239, b: 0.7264151, a: 1}
 --- !u!1 &3147530278949504294
 GameObject:
@@ -658,9 +659,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 28.51001, y: -4.72}
-  m_SizeDelta: {x: 42.97, y: 46.17}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -4.600006, y: -3.2}
+  m_SizeDelta: {x: 60, y: 50}
+  m_Pivot: {x: -0.029385032, y: 0.49999973}
 --- !u!222 &3475037450675458976
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -676,14 +677,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4907670830418536481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -691,7 +692,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

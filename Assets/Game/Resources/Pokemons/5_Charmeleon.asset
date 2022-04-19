@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 5
   name: Charmeleon
   description: 
-  littleSprite1: {fileID: 0}
+  littleSprite1: {fileID: 21300000, guid: 5f4f115c7408e27489dd5136ed52d249, type: 3}
   littleSprite2: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: bf6c89a6914b00346a7a1d354591cc67, type: 3}
   backSprite: {fileID: 21300000, guid: 423a18b75c0e7f34e9dcab4ff9170b2f, type: 3}
@@ -30,3 +30,7 @@ MonoBehaviour:
   learnableMoves:
   - level: 1
     move: {fileID: 11400000, guid: 1c13f2a7be5983843b7481b1229f013a, type: 2}
+  - level: 4
+    move: {fileID: 11400000, guid: e96bff791f2f8b24ca3849c06059b691, type: 2}
+  - level: 7
+    move: {fileID: 11400000, guid: c6f9655cd79dd05468074a8a69f13584, type: 2}

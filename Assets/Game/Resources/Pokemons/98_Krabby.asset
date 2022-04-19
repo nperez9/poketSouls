@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 98
   name: Krabby
   description: 
-  littleSprite1: {fileID: 0}
+  littleSprite1: {fileID: 21300000, guid: 0db20f217f3b10349a4c65a45a1d279a, type: 3}
   littleSprite2: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: e09df33fb80ebda44981ce86e358a272, type: 3}
   backSprite: {fileID: 21300000, guid: 51ea9e6094edac84891ebf4dd4d1def3, type: 3}

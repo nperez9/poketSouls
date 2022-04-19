@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 3
   name: Venusaur
   description: 
-  littleSprite1: {fileID: 0}
+  littleSprite1: {fileID: 21300000, guid: 23931e291d7b7ae4b8f788c553e86d20, type: 3}
   littleSprite2: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: f824769f97f10f646be290f289956249, type: 3}
   backSprite: {fileID: 21300000, guid: c190603ceb85f354c8e81ef0488a5afd, type: 3}

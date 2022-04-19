@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 25
   name: Pikachu
   description: 
-  littleSprite1: {fileID: 0}
+  littleSprite1: {fileID: 21300000, guid: cc58263adf323cc4899781153dfeb112, type: 3}
   littleSprite2: {fileID: 0}
   frontSprite: {fileID: 21300000, guid: c457d165cdf095747a680bca70eb8ec1, type: 3}
   backSprite: {fileID: 21300000, guid: aec4b30110be3c34aab88f5094867a8e, type: 3}

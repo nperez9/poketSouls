@@ -9,6 +9,7 @@ namespace Battle
         [SerializeField] Text nameText = null;
         [SerializeField] Text LevelText = null;
         [SerializeField] HpBar hpBar = null;
+        [SerializeField] Image miniImage = null;
         
         [SerializeField] Color higthligthedColor;
 
@@ -22,6 +23,8 @@ namespace Battle
             nameText.text = pkm.Base.Name;
             LevelText.text = "Lv. " + pkm.Level.ToString();
             hpBar.SetHp((float)pkm.HP / pkm.MaxHp);
+            miniImage.sprite = pkm.Base.LittleSprite1;
+            miniImage.enabled = true;
         }
 
         public void DisablePartySlot()

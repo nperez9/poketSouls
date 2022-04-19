@@ -235,7 +235,7 @@ namespace Battle {
                 ActionSelection();
             }
 
-            currentAction = Math.Clamp(currentAction, 0, playerUnit.Pokemon.Moves.Count - 1);
+            currentMove = Math.Clamp(currentMove, 0, playerUnit.Pokemon.Moves.Count - 1);
             battleDialogBox.UpdateMovesSelection(currentMove, playerUnit.Pokemon.Moves[currentMove]);
 
             // TODO: FirstFrameMove doesn't look like a very nice solution
