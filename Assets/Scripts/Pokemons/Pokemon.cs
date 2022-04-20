@@ -187,7 +187,12 @@ public class Pokemon
     public bool IsFireType()
     {
         return (this.Base.Type1 == PokemonType.Fire || this.Base.Type2 == PokemonType.Fire);
-    } 
+    }
+
+    public bool IsElectricType()
+    {
+        return (this.Base.Type1 == PokemonType.Electric || this.Base.Type2 == PokemonType.Electric);
+    }
 
     // this function use original pokemon(red, blue, green) calcule
     // TODO: Update to a modern pokemon game

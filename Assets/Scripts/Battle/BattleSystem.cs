@@ -346,7 +346,7 @@ namespace Battle {
 
             if (move.Base.Category == MoveCategory.Status)
             {
-                yield return StatusMove(move, sourceUnit.Pokemon, targetUnit.Pokemon);
+                yield return StatusMove(move, sourceUnit, targetUnit);
             } 
             else 
             { 
@@ -394,9 +394,11 @@ namespace Battle {
             }
         }
         
-
-        IEnumerator StatusMove(Move move, Pokemon sourcePkm, Pokemon targetPkm)
+        IEnumerator StatusMove(Move move, BattleUnit sourceUnit, BattleUnit targetUnit)
         {
+            Pokemon sourcePkm = sourceUnit.Pokemon;
+            Pokemon targetPkm = targetUnit.Pokemon;
+
             var effect = move.Base.Effect;
             if (effect.statBoosts != null)
             {
@@ -407,13 +409,13 @@ namespace Battle {
                 else
                 {
                     targetPkm.ApplyBoost(effect.statBoosts);
-                    
                 }
             }
 
             if (effect.Status != Data.ConditionID.none)
             {
                 targetPkm.ApplyCondition(effect.Status);
+                targetUnit.HUD.UpdateStatus(effect.Status);
             }
 
             yield return ShowStatusMessages(targetPkm);

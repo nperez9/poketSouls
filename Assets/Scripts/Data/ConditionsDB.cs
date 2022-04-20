@@ -13,6 +13,7 @@ namespace Data {
                 {
                     Name = "None",
                     StartMessage = "",
+                    ConditionId = ConditionID.none
                 }
             },
             {
@@ -22,6 +23,7 @@ namespace Data {
                 {
                     Name = "Poison",
                     StartMessage = "Has been poisoned",
+                    ConditionId = ConditionID.psn,
                     OnAferTurn = (Pokemon pkm) =>
                     {
                         int poisonDamage = pkm.MaxHp / 8;
@@ -38,6 +40,7 @@ namespace Data {
                 {
                     Name = "Burn",
                     StartMessage = "Has been burned",
+                    ConditionId = ConditionID.brn,
                     OnAferTurn = (Pokemon pkm) =>
                     {
                         int burnDamage = pkm.MaxHp / 16;
@@ -53,6 +56,7 @@ namespace Data {
                 {
                     Name = "Parylisis",
                     StartMessage = "Has been parylized",
+                    ConditionId = ConditionID.par,
                     OnBeforeMove = (Pokemon pkm) =>
                     {
                         if (Random.Range(1, 5) == 1)
@@ -70,6 +74,7 @@ namespace Data {
                 {
                     Name = "Frozen",
                     StartMessage = "Has been frozen",
+                    ConditionId = ConditionID.frz,
                     OnBeforeMove = (Pokemon pkm) =>
                     {
                         // if it's fire type should have 50% of chance of unfrozen, otherwise 25%
@@ -91,6 +96,7 @@ namespace Data {
                 {
                     Name = "Sleep",
                     StartMessage = "Has fall to Sleep",
+                    ConditionId = ConditionID.slp,
                     OnStart = (Pokemon pkm) =>
                     {
                         // sleep for 1 to 3 turns
