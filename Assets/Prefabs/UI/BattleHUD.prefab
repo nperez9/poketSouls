@@ -626,15 +626,15 @@ MonoBehaviour:
   statusMaps:
   - Condition: 0
     Image: {fileID: 0}
-  - Condition: 0
+  - Condition: 1
     Image: {fileID: -159352919, guid: 2751e7f77a04fbc4993bd8a5d8af45c9, type: 3}
-  - Condition: 0
+  - Condition: 2
     Image: {fileID: -1017837280, guid: 2751e7f77a04fbc4993bd8a5d8af45c9, type: 3}
-  - Condition: 0
+  - Condition: 3
     Image: {fileID: 252564567, guid: 2751e7f77a04fbc4993bd8a5d8af45c9, type: 3}
-  - Condition: 0
+  - Condition: 4
     Image: {fileID: 481735026, guid: 2751e7f77a04fbc4993bd8a5d8af45c9, type: 3}
-  - Condition: 0
+  - Condition: 5
     Image: {fileID: -681614924, guid: 2751e7f77a04fbc4993bd8a5d8af45c9, type: 3}
 --- !u!1 &5286893471349852670
 GameObject:

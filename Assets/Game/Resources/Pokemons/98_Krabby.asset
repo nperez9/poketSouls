@@ -17,8 +17,8 @@ MonoBehaviour:
   description: 
   littleSprite1: {fileID: 21300000, guid: 0db20f217f3b10349a4c65a45a1d279a, type: 3}
   littleSprite2: {fileID: 0}
-  frontSprite: {fileID: 21300000, guid: e09df33fb80ebda44981ce86e358a272, type: 3}
-  backSprite: {fileID: 21300000, guid: 51ea9e6094edac84891ebf4dd4d1def3, type: 3}
+  frontSprite: {fileID: 21300000, guid: 706b4810befa1fb438f3329f14956b9a, type: 3}
+  backSprite: {fileID: 21300000, guid: fbc1eaffc3ac82d4dbdb1440b0e39e1d, type: 3}
   type1: 3
   type2: 0
   maxHp: 30
@@ -28,5 +28,7 @@ MonoBehaviour:
   spDefence: 25
   speed: 50
   learnableMoves:
-  - level: 0
+  - level: 1
     move: {fileID: 11400000, guid: a276564b0e22fec478e8ddf11dcdd913, type: 2}
+  - level: 6
+    move: {fileID: 11400000, guid: 9881becc27dd32141a3e6834db387720, type: 2}

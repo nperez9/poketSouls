@@ -43,7 +43,7 @@ namespace Battle {
             else
             {
                 statusImage.enabled = true;
-                statusImage.sprite = statusMaps.Where(statusM => statusM.Condition == ConditionID.none).FirstOrDefault().Image;
+                statusImage.sprite = statusMaps.Where(statusM => statusM.Condition == condition).FirstOrDefault().Image;
             }
         }
     }

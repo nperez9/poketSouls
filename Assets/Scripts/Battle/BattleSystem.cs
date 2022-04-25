@@ -364,11 +364,12 @@ namespace Battle {
             enemyUnit.Pokemon.OnAfterTurn();
 
             yield return ShowStatusMessages(playerUnit.Pokemon);
+            StartCoroutine(playerUnit.HUD.UpdateHP());
+            
             yield return ShowStatusMessages(enemyUnit.Pokemon);
+            StartCoroutine(enemyUnit.HUD.UpdateHP());
 
             // TODO: improve update hp with the flag (end of chapter 20)
-            yield return playerUnit.HUD.UpdateHP();
-            yield return enemyUnit.HUD.UpdateHP();
 
             yield return CheckFaintedPokemon(playerUnit);
             yield return CheckFaintedPokemon(enemyUnit);
@@ -415,7 +416,7 @@ namespace Battle {
             if (effect.Status != Data.ConditionID.none)
             {
                 targetPkm.ApplyCondition(effect.Status);
-                targetUnit.HUD.UpdateStatus(effect.Status);
+                targetUnit.HUD.UpdateStatus(targetPkm.Status.ConditionId);
             }
 
             yield return ShowStatusMessages(targetPkm);
