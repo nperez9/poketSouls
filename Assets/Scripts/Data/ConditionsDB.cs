@@ -116,12 +116,40 @@ namespace Data {
                         return false;
                     }
                 }
+            },
+            {
+                ConditionID.confusion,
+                new Condition()
+                {
+                    Name = "Confucion"
+                    StartMessage = "His confunced",
+                    ConditionId = ConditionID.confusion,
+                    OnStart = (Pokemon pkm) =>
+                    {
+                        // sleep for 1 to 3 turns
+                        pkm.StatusTime = Random.Range(1, 4);
+                        Debug.Log($"Confucion for {pkm.StatusTime}");
+                    },
+                    OnBeforeMove = (Pokemon pkm) =>
+                    {
+                        if (pkm.StatusTime <= 0)
+                        {
+                            pkm.CureStatus();
+                            pkm.StatusChanges.Enqueue($"{pkm.Name} is no longer confucion!");
+                            return true;
+                        }
+                        pkm.StatusChanges.Enqueue($"{pkm.Name} it's sleeping like a wood");
+                        pkm.StatusTime --;
+                        return false;
+                    }
+                }
             }
         };
     }
 
     public enum ConditionID
     {
-        none, psn, brn, slp, par, frz
+        none, psn, brn, slp, par, frz,
+        confusion
     }
 }
