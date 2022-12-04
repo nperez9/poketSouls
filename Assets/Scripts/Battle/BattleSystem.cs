@@ -359,19 +359,22 @@ namespace Battle {
         // TODO: Improve performance of this thing
         IEnumerator AfterTurn()
         {
-            playerUnit.Pokemon.OnAfterTurn();
-            enemyUnit.Pokemon.OnAfterTurn();
+            //@TODO: Revisit this code, may be buggy
+            if (playerUnit.Pokemon.HP <= 0)
+            {
+                playerUnit.Pokemon.OnAfterTurn();
+                yield return ShowStatusMessages(playerUnit.Pokemon);
+                StartCoroutine(playerUnit.HUD.UpdateHP());
+                yield return CheckFaintedPokemon(playerUnit);
+            }
 
-            yield return ShowStatusMessages(playerUnit.Pokemon);
-            StartCoroutine(playerUnit.HUD.UpdateHP());
-            
-            yield return ShowStatusMessages(enemyUnit.Pokemon);
-            StartCoroutine(enemyUnit.HUD.UpdateHP());
-
-            // TODO: improve update hp with the flag (end of chapter 20)
-
-            yield return CheckFaintedPokemon(playerUnit);
-            yield return CheckFaintedPokemon(enemyUnit);
+            if (enemyUnit.Pokemon.HP <= 0)
+            {
+                enemyUnit.Pokemon.OnAfterTurn();
+                yield return ShowStatusMessages(enemyUnit.Pokemon);
+                StartCoroutine(enemyUnit.HUD.UpdateHP());
+                yield return CheckFaintedPokemon(enemyUnit);
+            }
         }
 
         IEnumerator CheckFaintedPokemon(BattleUnit unitToCheck)
