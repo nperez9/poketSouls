@@ -121,7 +121,7 @@ namespace Data {
                 ConditionID.confusion,
                 new Condition()
                 {
-                    Name = "Confucion"
+                    Name = "Confusion",
                     StartMessage = "His confunced",
                     ConditionId = ConditionID.confusion,
                     OnStart = (Pokemon pkm) =>
@@ -135,7 +135,7 @@ namespace Data {
                         if (pkm.StatusTime <= 0)
                         {
                             pkm.CureStatus();
-                            pkm.StatusChanges.Enqueue($"{pkm.Name} is no longer confucion!");
+                            pkm.StatusChanges.Enqueue($"{pkm.Name} is no longer confuced!");
                             return true;
                         }
                         pkm.StatusChanges.Enqueue($"{pkm.Name} it's sleeping like a wood");

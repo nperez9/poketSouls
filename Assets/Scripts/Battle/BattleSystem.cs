@@ -112,7 +112,6 @@ namespace Battle {
         private void PokemonChange()
         {
             state = BattleStates.PartySwitch;
-            firstFrameMove = true;
             partyScreen.SetPartyMembers(pokemonParty.GetPokemonsList());
 
             battleDialogBox.SetEnabledDialogBox(true);
