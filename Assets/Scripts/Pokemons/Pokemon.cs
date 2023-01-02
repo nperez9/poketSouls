@@ -14,6 +14,7 @@ public class Pokemon
     private List<Move> moves = new List<Move>(4);
     private string name;
     private int statusTime = 0;
+    private int volatileStatusTime = 0;
 
     public PoketSoulBase Base { get => _base; }
     public int Level { get => level; }
@@ -22,9 +23,10 @@ public class Pokemon
     public Dictionary<PokemonStat, int> Stats { get; private set; }
     public Dictionary<PokemonStat, int> StatsBoost { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
-    public int StatusTime { get => statusTime; set => statusTime = value; }
-
+    public int StatusTime { get => statusTime; set => statusTime = value; } 
     public Condition Status { get; private set; }
+    public int VolatileStatusTime { get => volatileStatusTime; set => volatileStatusTime = value; }
+    public Condition VolatileStatus { get; private set; }
 
     public string Name { get => name; }
 
@@ -81,6 +83,21 @@ public class Pokemon
             StatusChanges.Enqueue($"{this.Name} is {Status.Name}, And the effect not apply...");
         }
     }
+
+    public void ApplyVolatileCondition(ConditionID conditionID)
+    {
+        if (VolatileStatus.Name == "None")
+        {
+            VolatileStatus = ConditionsDB.Conditions[conditionID];
+            VolatileStatus?.OnStart?.Invoke(this);
+            StatusChanges.Enqueue($"{this.Name} {Status.StartMessage}");
+        }
+        else
+        {
+            StatusChanges.Enqueue($"{this.Name} is {Status.Name}, And the effect not apply...");
+        }
+    }
+
 
     public int Attack
     {
@@ -160,6 +177,8 @@ public class Pokemon
         }
     }
 
+    /////// EVENT TRIGGERS /////////////////////
+  
     public void OnBattleOver()
     {
         InitializeStatsBoost();
@@ -168,14 +187,23 @@ public class Pokemon
     public void OnAfterTurn()
     {
         Status.OnAferTurn?.Invoke(this);
+        VolatileStatus.OnAferTurn?.Invoke(this);
     }
 
     public bool OnBeforeMove()
     {
+
+        bool canPerformMove = true;
+        if (VolatileStatus.OnBeforeMove != null)
+        {
+            return VolatileStatus.OnBeforeMove(this);
+        }
         if (Status.OnBeforeMove != null)
         {
             return Status.OnBeforeMove(this);
         }
+        
+
         return true;
     }
 
@@ -184,7 +212,13 @@ public class Pokemon
         Status = ConditionsDB.Conditions[ConditionID.none];
     }
 
-    public bool IsFireType()
+    public void CureVolatileStatus()
+    {
+        VolatileStatus = ConditionsDB.Conditions[ConditionID.none];
+}
+
+
+public bool IsFireType()
     {
         return (this.Base.Type1 == PokemonType.Fire || this.Base.Type2 == PokemonType.Fire);
     }
